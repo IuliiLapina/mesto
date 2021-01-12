@@ -1,0 +1,9 @@
+.profile__title {
+  font-size: 27px;
+  line-height: 33px;
+  font-weight: 500;
+  margin: 0;
+  padding-top: 25px;
+
+  outline: 1px solid red;
+}

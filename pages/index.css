@@ -1,6 +1,17 @@
 @import url("../vendors/normalize.css");
+@import url("../vendors/fonts/Inter Web/inter.css");
 
 @import url("../blocks/all-content-page/all-content-page.css");
+@import url("../blocks/page/page.css");
 
 @import url("../blocks/header/header.css");
 @import url("../blocks/header/__logo/header__logo.css");
+
+@import url("../blocks/profile/profile.css");
+@import url("../blocks/profile/__avatar/profile__avatar.css");
+@import url("../blocks/profile/__title/profile__title.css");
+@import url("../blocks/profile/__subtitle/profile__subtitle.css");
+@import url("../blocks/form/form.css");
+@import url("../blocks/form/__add-button/form__add-button.css");
+@import url("../blocks/form/__edit-button/form__edit-button.css");
+
