@@ -16,3 +16,6 @@
 @import url("../blocks/form/__edit-button/form__edit-button.css");
 
 @import url("../blocks/cards/cards.css");
+
+@import url("../blocks/footer/footer.css");
+@import url("../blocks/footer/__copyright/footer__copyright.css");
