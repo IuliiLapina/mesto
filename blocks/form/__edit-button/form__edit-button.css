@@ -2,8 +2,11 @@
   width: 18px;
   height: 18px;
   border: 1px solid white;
-  padding: 0;
   position: absolute;
   top: -25px;
   left: 197px;
+  background-image: url("../../../images/button/edit-btn.svg");
+  background-size: 7px;
+  background-position: center;
+  background-repeat: no-repeat;
 }

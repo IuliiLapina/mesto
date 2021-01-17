@@ -20,6 +20,20 @@
   top: 123px;
 }
 
+.pop-up__close-btn {
+  background-image: url(../../images/button/pop-up-close-btn.svg);
+  background-size: 26px;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 26px;
+  height: 26px;
+  background-color: black;
+  border: none;
+  position: absolute;
+  top: -45px;
+  left: 250px;
+}
+
 .pop-up__title {
   z-index: 2;
   color: black;
@@ -33,14 +47,14 @@
 
 .input {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   padding: 75px 22px 25px;
 }
 
 .input__text {
   font-weight: normal;
+  width: 235px;
   font-size: 14px;
   line-height: 17px;
   border: none;
