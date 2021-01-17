@@ -10,3 +10,7 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.form__edit-button:hover {
+  opacity: 0.6;
+}
