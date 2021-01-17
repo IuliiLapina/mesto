@@ -2,13 +2,14 @@
   width: 18px;
   height: 18px;
   border: 1px solid white;
-  position: absolute;
-  top: -25px;
-  left: 197px;
-  background-image: url("../../../images/button/edit-btn.svg");
+  background-image: url(../../../images/button/edit-btn.svg);
   background-size: 7px;
   background-position: center;
   background-repeat: no-repeat;
+  grid-area: edit-button;
+  justify-self: center;
+  align-self: end;
+  margin-bottom: 8px;
 }
 
 .form__edit-button:hover {

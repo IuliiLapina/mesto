@@ -6,6 +6,10 @@
   padding-top: 7px;
   padding-bottom: 33px;
   text-align: center;
+  grid-area: subtitle;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 
   outline: 1px solid red;
 }

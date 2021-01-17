@@ -1,0 +1,7 @@
+.profile__info {
+  width: 282px;
+  display: grid;
+  grid-template-areas:
+  "title edit-button"
+  "subtitle subtitle";
+}
