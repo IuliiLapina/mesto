@@ -1,0 +1,64 @@
+.pop-up {
+  max-width: inherit;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color:rgba(0, 0, 0, 0.5);
+  position: fixed;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.pop-up__container {
+  margin: 0 auto;
+  background-color: white;
+  width: 282px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  position: relative;
+  top: 123px;
+}
+
+.pop-up__title {
+  z-index: 2;
+  color: black;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  margin: 0;
+  padding-top: 25px;
+}
+
+.input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 75px 22px 25px;
+}
+
+.input__text {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 8px;
+}
+
+.input__text_type_name {
+  margin-bottom: 30px;
+}
+
+.form__save-edit-btn {
+  color: white;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 14px 82px;
+  border: none;
+  border-radius: 2px;
+  margin-top: 45px;
+}
