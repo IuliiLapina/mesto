@@ -1,0 +1,11 @@
+.card {
+  background-color: white;
+  width: 282px;
+  min-height: 361px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.card:last-child {
+  margin-bottom: 0;
+}
