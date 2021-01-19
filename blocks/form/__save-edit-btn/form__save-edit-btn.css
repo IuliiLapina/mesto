@@ -3,7 +3,8 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  padding: 14px 82px;
+  width: 238px;
+  height: 46px;
   border: none;
   border-radius: 2px;
   margin-top: 45px;
@@ -11,4 +12,13 @@
 
 .form__save-edit-btn:hover {
   opacity: 0.8;
+}
+
+@media screen and (min-width: 880px) {
+  .form__save-edit-btn {
+    font-size: 18px;
+    line-height: 22px;
+    width: 358px;
+    height: 54px;
+  }
 }

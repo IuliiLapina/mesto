@@ -7,3 +7,10 @@
   position: relative;
   top: 123px;
 }
+
+@media screen and (min-width: 880px) {
+  .pop-up__container {
+    width: 430px;
+    top: 195px;
+  }
+}

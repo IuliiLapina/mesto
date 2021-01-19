@@ -4,3 +4,9 @@
   flex-direction: column;
   padding: 75px 22px 25px;
 }
+
+@media screen and (min-width: 880px) {
+  .input {
+    padding: 48px 35px 36px;
+  }
+}

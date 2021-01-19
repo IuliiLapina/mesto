@@ -7,8 +7,16 @@
   background-size: 16px;
   background-position: center;
   background-repeat: no-repeat;
+  grid-area: add-button;
 }
 
 .form__add-button:hover {
   opacity: 0.6;
+}
+
+@media screen and (min-width: 880px) {
+  .form__add-button {
+    width: 150px;
+    background-size: 22px;
+  }
 }
