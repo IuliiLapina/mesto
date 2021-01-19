@@ -1,4 +1,4 @@
-.pop-up__title {
+.popup__title {
   color: black;
   font-weight: 900;
   font-size: 18px;
@@ -9,7 +9,7 @@
 }
 
 @media screen and (min-width: 880px) {
-  .pop-up__title {
+  .popup__title {
     font-size: 24px;
     line-height: 29px;
     text-align: start;
