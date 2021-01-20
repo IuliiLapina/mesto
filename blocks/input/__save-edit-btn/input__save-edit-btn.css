@@ -1,4 +1,4 @@
-.form__save-edit-btn {
+.input__save-edit-btn {
   color: white;
   font-weight: normal;
   font-size: 14px;
@@ -8,14 +8,15 @@
   border: none;
   border-radius: 2px;
   margin-top: 45px;
+  background-color: black;
 }
 
-.form__save-edit-btn:hover {
+.input__save-edit-btn:hover {
   opacity: 0.8;
 }
 
 @media screen and (min-width: 880px) {
-  .form__save-edit-btn {
+  .input__save-edit-btn {
     font-size: 18px;
     line-height: 22px;
     width: 358px;

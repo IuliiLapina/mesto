@@ -1,4 +1,4 @@
-.form__edit-button {
+.profile__edit-button {
   width: 18px;
   height: 18px;
   border: 1px solid white;
@@ -10,14 +10,15 @@
   justify-self: center;
   align-self: end;
   margin-bottom: 8px;
+  background-color: black;
 }
 
-.form__edit-button:hover {
+.profile__edit-button:hover {
   opacity: 0.6;
 }
 
 @media screen and (min-width: 880px) {
-  .form__edit-button {
+  .profile__edit-button {
     width: 24px;
     height: 24px;
     background-size: 10px;
