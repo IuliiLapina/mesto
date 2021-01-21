@@ -9,6 +9,7 @@
   border-radius: 2px;
   margin-top: 45px;
   background-color: black;
+  cursor: pointer;
 }
 
 .input__save-edit-btn:hover {

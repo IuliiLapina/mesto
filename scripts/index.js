@@ -8,24 +8,27 @@ let jobProfile = content.querySelector('.profile__subtitle');
 let jobInput = popup.querySelector('.input__text_type_job');
 let formElement = popup.querySelector(".input");
 
-//Добавим в поля попапа значения со страницы
-nameInput.value = nameProfile.textContent;
-jobInput.value = jobProfile.textContent;
-
-//Добавим функцию открытия и закрытия попапа
-function popupToggle() {
-  popup.classList.toggle('popup_opened');
+//Добавим функцию открытия попапа, lобавим в поля попапа значения со страницы
+function popupOpen() {
+  nameInput.value = nameProfile.textContent;
+  jobInput.value = jobProfile.textContent;
+  popup.classList.add('popup_opened');
 }
 
-editBtn.addEventListener('click', popupToggle);
-popupCloseBtn.addEventListener('click', popupToggle);
+//Добавим функцию закрытия попапа
+function popupClose() {
+  popup.classList.remove('popup_opened');
+}
+
+editBtn.addEventListener('click', popupOpen);
+popupCloseBtn.addEventListener('click', popupClose);
 
 //Редактирование имени и информации о себе
   function formSubmitHandler (evt) {
     evt.preventDefault();
     jobProfile.textContent = jobInput.value;
     nameProfile.textContent = nameInput.value;
-    popupToggle();
+    popupClose();
 }
 
 formElement.addEventListener('submit', formSubmitHandler);

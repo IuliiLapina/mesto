@@ -10,7 +10,8 @@
   justify-self: center;
   align-self: end;
   margin-bottom: 8px;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {

@@ -1,5 +1,7 @@
 .popup {
   display: none;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   max-width: inherit;
   top: 0;
@@ -7,5 +9,4 @@
   left: 0;
   right: 0;
   background-color:rgba(0, 0, 0, 0.5);
-
 }

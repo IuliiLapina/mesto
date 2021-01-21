@@ -8,6 +8,10 @@
   padding-bottom: 8px;
 }
 
+.input__text:first-child {
+  margin-bottom: 30px;
+}
+
 @media screen and (min-width: 880px) {
   .input__text {
     width: 358px;

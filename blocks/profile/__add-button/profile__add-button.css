@@ -8,7 +8,8 @@
   background-position: center;
   background-repeat: no-repeat;
   grid-area: add-button;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
 }
 
 .profile__add-button:hover {

@@ -10,9 +10,7 @@
       <div class="page">
 
         <header class="header">
-          <nav class="header__nav">
-            <img class="header__logo" src="./images/logo/Vector.svg" href=# alt="Логотип 'Mesto'">
-          </nav>
+            <img class="header__logo" src="./images/logo/Vector.svg" alt="Логотип 'Mesto'">
         </header>
 
         <main class="content">
@@ -21,25 +19,10 @@
               <img class="profile__avatar" src="./images/avatar/image.jpg" alt="Аватар профиля">
               <div class="profile__info">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button" aria-label="Зедактировать профиль"></button>
+                <button class="profile__edit-button" type="button" aria-label="Зедактировать профиль"></button>
                 <p class="profile__subtitle">Исследователь океана</p>
               </div>
-            <button class="profile__add-button"></button>
-          </section>
-
-          <section class="popup">
-              <div class="popup__container">
-                <button class="popup__close-btn"></button>
-                <h2 class="popup__title">
-                  Редактировать профиль
-                </h2>
-                <form class="input">
-                  <input type="text" placeholder="Имя" class="input__text input__text_type_name">
-                  <input type="text" placeholder="О себе" class="input__text input__text_type_job">
-                  <input type="submit" class="input__save-edit-btn" aria-label="Сохранить изменения" value='Сохранить'>
-                </form>
-              </div>
-
+            <button class="profile__add-button" type="button"></button>
           </section>
 
           <section class="content-cards">
@@ -49,7 +32,7 @@
                 <img class="card__image" src="./images/cards/photo_2021-01-19_14-40-40.jpg" alt="Фото к карточке">
                 <div class="card__description">
                   <h2 class="card__title">Коробка для кота</h2>
-                  <button class="card__like-btn"></button>
+                  <button class="card__like-btn" type="button"></button>
                 </div>
               </li>
 
@@ -57,7 +40,7 @@
                 <img class="card__image" src="./images/cards/rai.jpg" alt="Фото к карточке">
                 <div class="card__description">
                   <h2 class="card__title">Рай</h2>
-                  <button class="card__like-btn"></button>
+                  <button class="card__like-btn" type="button"></button>
                 </div>
               </li>
 
@@ -65,14 +48,14 @@
                 <img class="card__image" src="./images/cards/singapure.jpg" alt="Фото к карточке">
                 <div class="card__description">
                   <h2 class="card__title">Сингапур</h2>
-                  <button class="card__like-btn"></button>
+                  <button class="card__like-btn" type="button"></button>
                 </div>
               </li>
               <li class="card">
                 <img class="card__image" src="./images/cards/kyliki.jpg" alt="Фото к карточке">
                 <div class="card__description">
                   <h2 class="card__title">Кулики</h2>
-                  <button class="card__like-btn"></button>
+                  <button class="card__like-btn" type="button"></button>
                 </div>
               </li>
 
@@ -80,7 +63,7 @@
                 <img class="card__image" src="./images/cards/medyz-geizer.jpg" alt="Фото к карточке">
                 <div class="card__description">
                   <h2 class="card__title">Медузий гейзер</h2>
-                  <button class="card__like-btn"></button>
+                  <button class="card__like-btn" type="button"></button>
                 </div>
               </li>
 
@@ -88,12 +71,28 @@
                 <img class="card__image" src="./images/cards/NY.jpg" alt="Фото к карточке">
                 <div class="card__description">
                   <h2 class="card__title">Нью-Йорк</h2>
-                  <button class="card__like-btn"></button>
+                  <button class="card__like-btn" type="button"></button>
                 </div>
               </li>
             </ul>
 
           </section>
+
+          <div class="popup">
+              <div class="popup__container">
+                <button class="popup__close-btn" type="button"></button>
+                <h2 class="popup__title">
+                  Редактировать профиль
+                </h2>
+                <form class="input" name="form-edit-profile">
+                  <input class="input__text input__text_type_name"  type="text" placeholder="Имя" name="name-profile" required>
+                  <input class="input__text input__text_type_job" type="text" placeholder="О себе" name="job-profile" required>
+                  <input type="submit" class="input__save-edit-btn" aria-label="Сохранить изменения" value='Сохранить' name="submit-popap-profile">
+                </form>
+              </div>
+          </div>
+
+
 
         </main>
 
