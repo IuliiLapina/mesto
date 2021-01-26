@@ -1,34 +1,48 @@
 let content = document.querySelector('.content');
 let editBtn = content.querySelector('.profile__edit-button');
-let popup = content.querySelector('.popup');
-let popupCloseBtn = content.querySelector('.popup__close-btn');
+let popupEditProfile = document.getElementById('popup-edit-profile');
+let popupAddCard = document.getElementById('popup-add-card');
+let popupCloseBtnEditProfile = popupEditProfile.querySelector('.popup__close-btn');
+let popupCloseBtnAddCard = popupAddCard.querySelector('.popup__close-btn');
 let nameProfile = content.querySelector('.profile__title');
-let nameInput = popup.querySelector('.input__text_type_name');
+let nameInput = popupEditProfile.querySelector('.input__text_type_name');
 let jobProfile = content.querySelector('.profile__subtitle');
-let jobInput = popup.querySelector('.input__text_type_job');
-let formElement = popup.querySelector('.input');
+let jobInput = popupEditProfile.querySelector('.input__text_type_job');
+let formElement = popupEditProfile.querySelector('.input');
+let addCardBtn = content.querySelector('.profile__add-button');
 
-//Добавим функцию открытия попапа, lобавим в поля попапа значения со страницы
-function popupOpen() {
+//Функция открытия попапа редактирования профиля, добавление в поля попапа значения со страницы
+function popupOpenEditProfile() {
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
-  popup.classList.add('popup_opened');
+  popupEditProfile.classList.add('popup_opened');
 }
+editBtn.addEventListener('click', popupOpenEditProfile);
 
-//Добавим функцию закрытия попапа
-function popupClose() {
-  popup.classList.remove('popup_opened');
+//Функция открытия попапа добавления карточки
+function popupOpenAddCard() {
+  popupAddCard.classList.add('popup_opened');
 }
+addCardBtn.addEventListener('click', popupOpenAddCard);
 
-editBtn.addEventListener('click', popupOpen);
-popupCloseBtn.addEventListener('click', popupClose);
+//Функция закрытия попапа редактирования профиля
+function popupCloseEditProfile() {
+  popupEditProfile.classList.remove('popup_opened');
+}
+popupCloseBtnEditProfile.addEventListener('click', popupCloseEditProfile);
+
+//Функция закрытия попапа добавления карточки
+function popupCloseAddCard() {
+  popupAddCard.classList.remove('popup_opened');
+}
+popupCloseBtnAddCard.addEventListener('click', popupCloseAddCard);
 
 //Редактирование имени и информации о себе
   function formSubmitHandler (evt) {
     evt.preventDefault();
     jobProfile.textContent = jobInput.value;
     nameProfile.textContent = nameInput.value;
-    popupClose();
+    popupCloseEditProfile();
 }
 
 formElement.addEventListener('submit', formSubmitHandler);

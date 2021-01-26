@@ -32,7 +32,7 @@
 
           </section>
 
-          <div class="popup" id="popup-edit-profile">
+          <div id="popup-edit-profile" class="popup">
               <div class="popup__container">
                 <button class="popup__close-btn" type="button"></button>
                 <h2 class="popup__title">
@@ -45,16 +45,17 @@
                 </form>
               </div>
           </div>
+
           <div class="popup" id="popup-add-card">
               <div class="popup__container">
                 <button class="popup__close-btn" type="button"></button>
                 <h2 class="popup__title">
-                  Редактировать профиль
+                  Новое место
                 </h2>
-                <form class="input" name="form-edit-profile">
-                  <input class="input__text input__text_type_name"  type="text" placeholder="Имя" name="name-profile" required>
-                  <input class="input__text input__text_type_job" type="text" placeholder="О себе" name="job-profile" required>
-                  <input type="submit" class="input__save-edit-btn" aria-label="Сохранить изменения" value='Сохранить' name="submit-popap-profile">
+                <form class="input" name="form-add-card">
+                  <input class="input__text input__text_type_title"  type="text" placeholder="Название" name="title-card" required>
+                  <input class="input__text input__text_type_link" type="text" placeholder="Ссылка на картинку" name="link-card" required>
+                  <input type="submit" class="input__save-edit-btn" aria-label="Создать карточку" value='Создать' name="submit-popup-card">
                 </form>
               </div>
           </div>
