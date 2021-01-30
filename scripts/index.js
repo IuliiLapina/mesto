@@ -6,18 +6,18 @@ const popupEditProfile = content.querySelector('.popup-edit-profile');
 const editBtn = content.querySelector('.profile__edit-button');
 const popupCloseBtnEditProfile = popupEditProfile.querySelector('.popup__close-btn');
 
-let nameProfile = content.querySelector('.profile__title');
-let nameInput = popupEditProfile.querySelector('.input__text_type_name');
-let jobProfile = content.querySelector('.profile__subtitle');
-let jobInput = popupEditProfile.querySelector('.input__text_type_job');
+const nameProfile = content.querySelector('.profile__title');
+const nameInput = popupEditProfile.querySelector('.input__text_type_name');
+const jobProfile = content.querySelector('.profile__subtitle');
+const jobInput = popupEditProfile.querySelector('.input__text_type_job');
 const formBtnEditProfile = popupEditProfile.querySelector('.input');
 
 const popupAddCard = content.querySelector('.popup-add-card');
 const addCardBtn = content.querySelector('.profile__add-button');
 const popupCloseBtnAddCard = popupAddCard.querySelector('.popup__close-btn');
 
-let titleInput = popupAddCard.querySelector('.input__text_type_title');
-let linkInput = popupAddCard.querySelector('.input__text_type_link');
+const titleInput = popupAddCard.querySelector('.input__text_type_title');
+const linkInput = popupAddCard.querySelector('.input__text_type_link');
 const formBtnAddCard = popupAddCard.querySelector('.input');
 
 const popupZoomImg = content.querySelector('.popup-zoom-img');
@@ -27,11 +27,23 @@ const popupZoomCloseBtn = popupZoomImg.querySelector('.popup__close-btn-zoom-img
 
 //-------------------------------------------------------------------------------------------------------
 
+//Открыть попап
+function openPopup (popup) {
+  popup.classList.add('popup_opened');
+}
+
+//Закрыть попап
+function closePopup (evt) {
+  evt.target.closest('.popup').classList.remove('popup_opened');
+}
+
+//-------------------------------------------------------------------------------------------------------
+
 //Открыть попап редактирования профиля, добавить в поля попапа значения со страницы
 function popupOpenEditProfile() {
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
-  popupEditProfile.classList.add('popup_opened');
+  openPopup(popupEditProfile);
 }
 
 editBtn.addEventListener('click', popupOpenEditProfile); //Открыть
@@ -44,33 +56,25 @@ function formSubmitHandler (evt) {
   nameProfile.textContent = nameInput.value;
   closePopup(evt);
 }
+
 formBtnEditProfile.addEventListener('submit', formSubmitHandler);
 
 //-------------------------------------------------------------------------------------------------------
 
-//Закрыть попап
-function closePopup (evt) {
-  evt.target.closest('.popup').classList.remove('popup_opened');
-}
-
-//-------------------------------------------------------------------------------------------------------
-
-//Открыть попап добавления карточки
-function popupOpenAddCard() {
-  popupAddCard.classList.add('popup_opened');
-}
-addCardBtn.addEventListener('click', popupOpenAddCard); //Открыть
+//Попап добавления карточки
+addCardBtn.addEventListener('click', () => {openPopup(popupAddCard);}); //Открыть
 popupCloseBtnAddCard.addEventListener('click', closePopup); //Закрыть
 
 //-------------------------------------------------------------------------------------------------------
 
 //Открыть попап картинки
 function handleZoomImg(nameValue, linkValue) {
-  popupZoomImg.classList.add('popup_opened');
+  openPopup(popupZoomImg);
   popupImg.src = linkValue;
   popupCaption.textContent = nameValue;
 }
 popupZoomCloseBtn.addEventListener('click', closePopup) //Закрыть
+
 //-------------------------------------------------------------------------------------------------------
 
 //Добавить карточку с значениями пользователя через попап
