@@ -77,28 +77,6 @@ popupZoomCloseBtn.addEventListener('click', closePopup) //Закрыть
 
 //-------------------------------------------------------------------------------------------------------
 
-//Добавить карточку с значениями пользователя через попап
-function addCard (nameValue, linkValue) {
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-
-  cardElement.querySelector('.card__title').textContent = nameValue;
-  cardElement.querySelector('.card__image').src = linkValue;
-
-  cardElement.querySelector('.card__image').addEventListener('click',  () => handleZoomImg(nameValue, linkValue));
-  cardElement.querySelector('.card__delete-btn').addEventListener('click', handleDelete);
-  cardElement.querySelector('.card__like-btn').addEventListener('click', handleLike);
-
-  cards.prepend(cardElement);
-}
-
-//Добавить карточку кнопкой 'Создать'
-function handleSubmitAddCard (evt) {
-  evt.preventDefault();
-  addCard(titleInput.value, linkInput.value);
-  closePopup(evt);
-}
-formBtnAddCard.addEventListener('submit', handleSubmitAddCard)
-
 //Удалить карточку
 function handleDelete(evt) {
   evt.target.closest('.card').remove();
@@ -109,9 +87,8 @@ function handleLike(evt) {
   evt.target.closest('.card__like-btn').classList.toggle('card__like-btn_active');
 }
 
-//-------------------------------------------------------------------------------------------------------
-
 //Отрисовать 6 карточек
+
 const contentCards = document.querySelector('.content-cards');
 const cards = contentCards.querySelector('.cards');
 
@@ -142,8 +119,40 @@ const initialCards = [
   }
 ];
 
-initialCards.forEach((item) => {
-  addCard(item.name, item.link)
-});
+//-------------------------------------------------------------------------------------------------------
 
+//Создать карточку
+function createCard (data) {
+  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
+  cardElement.querySelector('.card__image').addEventListener('click',  () => handleZoomImg(data.name, data.link));
+  cardElement.querySelector('.card__delete-btn').addEventListener('click', handleDelete);
+  cardElement.querySelector('.card__like-btn').addEventListener('click', handleLike);
+
+  cardElement.querySelector('.card__title').textContent = data.name;
+  cardElement.querySelector('.card__image').src = data.link;
+
+  return cardElement;
+}
+
+//Отрисовать карточку
+function renderCard (data, cardlist) {
+  cardlist.prepend(createCard(data));
+}
+
+//Отрисовать 6 первых карточек
+initialCards.forEach(data => renderCard(data, cards));
+
+//Добавить карточку кнопкой 'Создать'
+function handleSubmitAddCard (evt) {
+  evt.preventDefault();
+
+  const cardInput = {
+    name: titleInput.value,
+    link: linkInput.value
+  }
+
+  renderCard(cardInput, cards);
+  closePopup(evt);
+}
+formBtnAddCard.addEventListener('submit', handleSubmitAddCard)
