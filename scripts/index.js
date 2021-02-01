@@ -1,5 +1,4 @@
 const content = document.querySelector('.content');
-const cardTemplate = document.querySelector('#card-template').content;
 const popup = content.querySelector('.popup');
 
 const popupEditProfile = content.querySelector('.popup-edit-profile');
@@ -121,9 +120,11 @@ const initialCards = [
 
 //-------------------------------------------------------------------------------------------------------
 
+const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
+
 //Создать карточку
 function createCard (data) {
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
+  const cardElement = cardTemplate.cloneNode(true);
 
   cardElement.querySelector('.card__image').addEventListener('click',  () => handleZoomImg(data.name, data.link));
   cardElement.querySelector('.card__delete-btn').addEventListener('click', handleDelete);
