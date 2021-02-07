@@ -1,4 +1,4 @@
-.input {
+.popup__form {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -6,7 +6,7 @@
 }
 
 @media screen and (min-width: 880px) {
-  .input {
+  .popup__form {
     padding: 48px 35px 36px;
   }
 }

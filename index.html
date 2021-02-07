@@ -38,9 +38,9 @@
                 <h2 class="popup__title">
                   Редактировать профиль
                 </h2>
-                <form class="input" name="form-edit-profile">
-                  <input class="input__text input__text_type_name"  type="text" placeholder="Имя" name="name-profile" required>
-                  <input class="input__text input__text_type_job" type="text" placeholder="О себе" name="job-profile" required>
+                <form class="popup__form" name="form-edit-profile">
+                  <input class="input input__text input__text_type_name"  type="text" placeholder="Имя" name="name-profile" required>
+                  <input class="input input__text input__text_type_job" type="text" placeholder="О себе" name="job-profile" required>
                   <input type="submit" class="input__save-edit-btn" aria-label="Сохранить изменения" value='Сохранить' name="submit-popap-profile">
                 </form>
               </div>
@@ -52,9 +52,9 @@
                 <h2 class="popup__title">
                   Новое место
                 </h2>
-                <form class="input" name="form-add-card">
-                  <input class="input__text input__text_type_title"  type="text" placeholder="Название" name="title-card" required>
-                  <input class="input__text input__text_type_link" type="text" placeholder="Ссылка на картинку" name="link-card" required>
+                <form class="popup__form" name="form-add-card">
+                  <input class="input input__text input__text_type_title"  type="text" placeholder="Название" name="title-card" required>
+                  <input class="input input__text input__text_type_link" type="text" placeholder="Ссылка на картинку" name="link-card" required>
                   <input type="submit" class="input__save-edit-btn" aria-label="Создать карточку" value='Создать' name="submit-popup-card">
                 </form>
               </div>
@@ -89,5 +89,6 @@
       </template>
 
       <script src="./scripts/index.js"></script>
+      <script src='./scripts/validate.js'></script>
   </body>
 </html>

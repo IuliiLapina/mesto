@@ -9,7 +9,7 @@ const nameProfile = content.querySelector('.profile__title');
 const nameInput = popupEditProfile.querySelector('.input__text_type_name');
 const jobProfile = content.querySelector('.profile__subtitle');
 const jobInput = popupEditProfile.querySelector('.input__text_type_job');
-const formBtnEditProfile = popupEditProfile.querySelector('.input');
+const formBtnEditProfile = popupEditProfile.querySelector('.popup__form');
 
 const popupAddCard = content.querySelector('.popup-add-card');
 const addCardBtn = content.querySelector('.profile__add-button');
@@ -17,7 +17,7 @@ const popupCloseBtnAddCard = popupAddCard.querySelector('.popup__close-btn');
 
 const titleInput = popupAddCard.querySelector('.input__text_type_title');
 const linkInput = popupAddCard.querySelector('.input__text_type_link');
-const formBtnAddCard = popupAddCard.querySelector('.input');
+const formBtnAddCard = popupAddCard.querySelector('.popup__form');
 
 const popupZoomImg = content.querySelector('.popup-zoom-img');
 const popupImg = popupZoomImg.querySelector('.popup__zoom-img');
@@ -26,14 +26,25 @@ const popupZoomCloseBtn = popupZoomImg.querySelector('.popup__close-btn-zoom-img
 
 //-------------------------------------------------------------------------------------------------------
 
+//Закрыть попап Esc
+const handleEscClick = (evt) => {
+  if (evt.key === 'Escape') {
+    closePopup(popup);
+  }
+}
+
 //Открыть попап
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+
+  document.addEventListener('keydown', handleEscClick);
 }
 
 //Закрыть попап
-function closePopup (evt) {
-  evt.target.closest('.popup').classList.remove('popup_opened');
+function closePopup (popup) {
+  popup = document.querySelector('.popup_opened').classList.remove('popup_opened');
+
+  document.removeEventListener('keydown', handleEscClick);
 }
 
 //-------------------------------------------------------------------------------------------------------
