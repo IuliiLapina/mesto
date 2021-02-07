@@ -26,6 +26,19 @@ const popupZoomCloseBtn = popupZoomImg.querySelector('.popup__close-btn-zoom-img
 
 //-------------------------------------------------------------------------------------------------------
 
+//Закрыть попап кликом по overlay
+
+const handleOverlayClick = (evt) => {
+   if (evt.target === evt.currentTarget) {
+    closePopup(evt)
+   }
+}
+
+const popupArray = Array.from(document.querySelectorAll('.popup'));
+popupArray.forEach((popupItem) => {
+  popupItem.addEventListener('click', handleOverlayClick);
+})
+
 //Закрыть попап Esc
 const handleEscClick = (evt) => {
   if (evt.key === 'Escape') {
@@ -54,6 +67,8 @@ function popupOpenEditProfile() {
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
   openPopup(popupEditProfile);
+
+
 }
 
 editBtn.addEventListener('click', popupOpenEditProfile); //Открыть
