@@ -1,4 +1,4 @@
-.input__save-edit-btn {
+.popup__button {
   color: white;
   font-weight: normal;
   font-size: 14px;
@@ -12,12 +12,12 @@
   cursor: pointer;
 }
 
-.input__save-edit-btn:hover {
+.popup__button:hover {
   opacity: 0.8;
 }
 
 @media screen and (min-width: 880px) {
-  .input__save-edit-btn {
+  .popup__button {
     font-size: 18px;
     line-height: 22px;
     width: 358px;

@@ -67,8 +67,6 @@ function popupOpenEditProfile() {
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
   openPopup(popupEditProfile);
-
-
 }
 
 editBtn.addEventListener('click', popupOpenEditProfile); //Открыть
