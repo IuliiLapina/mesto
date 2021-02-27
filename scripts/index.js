@@ -6,17 +6,17 @@ const editBtn = content.querySelector('.profile__edit-button');
 const popupCloseBtnEditProfile = popupEditProfile.querySelector('.popup__close-btn');
 
 const nameProfile = content.querySelector('.profile__title');
-const nameInput = popupEditProfile.querySelector('.input__text_type_name');
+const nameInput = popupEditProfile.querySelector('.popup__input-text_type_name');
 const jobProfile = content.querySelector('.profile__subtitle');
-const jobInput = popupEditProfile.querySelector('.input__text_type_job');
+const jobInput = popupEditProfile.querySelector('.popup__input-text_type_job');
 const formBtnEditProfile = popupEditProfile.querySelector('.popup__form');
 
 const popupAddCard = content.querySelector('.popup-add-card');
 const addCardBtn = content.querySelector('.profile__add-button');
 const popupCloseBtnAddCard = popupAddCard.querySelector('.popup__close-btn');
 
-const titleInput = popupAddCard.querySelector('.input__text_type_title');
-const linkInput = popupAddCard.querySelector('.input__text_type_link');
+const titleInput = popupAddCard.querySelector('.popup__input-text_type_title');
+const linkInput = popupAddCard.querySelector('.popup__input-text_type_link');
 const formBtnAddCard = popupAddCard.querySelector('.popup__form');
 
 const popupZoomImg = content.querySelector('.popup-zoom-img');

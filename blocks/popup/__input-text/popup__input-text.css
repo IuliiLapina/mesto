@@ -1,4 +1,4 @@
-.input__text {
+.popup__input-text {
   font-weight: normal;
   width: 235px;
   font-size: 14px;
@@ -9,12 +9,12 @@
   padding-top: 30px;
 }
 
-.input__text:first-child {
+.popup__input-text:first-child {
   padding-top: 0;
 }
 
 @media screen and (min-width: 880px) {
-  .input__text {
+  .popup__input-text {
     width: 358px;
   }
 }
