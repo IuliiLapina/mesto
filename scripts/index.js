@@ -37,15 +37,27 @@ popups.forEach((popup) => {
     })
 })
 
+
+
 //Открыть попап
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', handleEscClick);
+}
+
+//Закрыть попап Esc
+const handleEscClick = (evt) => {
+  if (evt.key === 'Escape') {
+    closePopup();
+    document.removeEventListener('keydown', handleEscClick);
+  }
 }
 
 //Закрыть попап
 function closePopup() {
   document.querySelector(".popup_opened").classList.remove("popup_opened");
 }
+
 
 //-------------------------------------------------------------------------------------------------------
 
