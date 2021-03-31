@@ -1,3 +1,10 @@
+import { Card } from "./Card.js";
+import {FormValidator} from './FormValidator.js';
+
+const popupZoomImg = document.querySelector(".popup-zoom-img");
+const popupImg = popupZoomImg.querySelector(".popup__zoom-img");
+const popupCaption = popupZoomImg.querySelector(".popup__zoom-caption");
+
 const content = document.querySelector(".content");
 
 const popupEditProfile = content.querySelector(".popup-edit-profile");
@@ -18,16 +25,63 @@ const titleInput = popupAddCard.querySelector(".popup__input-text_type_title");
 const linkInput = popupAddCard.querySelector(".popup__input-text_type_link");
 const formBtnAddCard = popupAddCard.querySelector(".popup__form");
 
-const popupZoomImg = content.querySelector(".popup-zoom-img");
-const popupImg = popupZoomImg.querySelector(".popup__zoom-img");
-const popupCaption = popupZoomImg.querySelector(".popup__zoom-caption");
-const popupZoomCloseBtn = popupZoomImg.querySelector(".popup__close-btn-zoom-img");
+const popupZoomCloseBtn = content.querySelector(".popup__close-btn-zoom-img");
 
 const contentCards = document.querySelector(".content-cards");
 const cards = contentCards.querySelector(".cards");
 
-//-------------------------------------------------------------------------------------------------------
+const initialCards = [
+  {
+    name: "Архыз",
+    link:
+      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+  },
+  {
+    name: "Челябинская область",
+    link:
+      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+  },
+  {
+    name: "Иваново",
+    link:
+      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+  },
+  {
+    name: "Камчатка",
+    link:
+      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+  },
+  {
+    name: "Холмогорский район",
+    link:
+      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+  },
+  {
+    name: "Байкал",
+    link:
+      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+  },
+];
 
+//Отрисуем 6 карточек
+initialCards.forEach((item) => {
+  const card = new Card(item, '.card-template', handleZoomImg);  // Создадим экземпляр карточки
+  const cardElement = card.generateCard();  // Создаём карточку и возвращаем наружу
+  cards.prepend(cardElement);
+});
+
+//Открыть попап
+function openPopup(popup) {
+  popup.classList.add("popup_opened");
+  document.addEventListener('keydown', handleEscClick);
+}
+
+//Закрыть попап
+function closePopup() {
+  document.querySelector(".popup_opened").classList.remove("popup_opened");
+}
+
+//закрытие всех попапов кликом на крест и оверлей
 const popups = document.querySelectorAll('.popup')
 popups.forEach((popup) => {
     popup.addEventListener('click', (evt) => {
@@ -37,14 +91,6 @@ popups.forEach((popup) => {
     })
 })
 
-
-
-//Открыть попап
-function openPopup(popup) {
-  popup.classList.add("popup_opened");
-  document.addEventListener('keydown', handleEscClick);
-}
-
 //Закрыть попап Esc
 const handleEscClick = (evt) => {
   if (evt.key === 'Escape') {
@@ -53,21 +99,13 @@ const handleEscClick = (evt) => {
   }
 }
 
-//Закрыть попап
-function closePopup() {
-  document.querySelector(".popup_opened").classList.remove("popup_opened");
-}
-
-
 //-------------------------------------------------------------------------------------------------------
-
 //Открыть попап редактирования профиля, добавить в поля попапа значения со страницы
 function popupOpenEditProfile() {
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
   openPopup(popupEditProfile);
 }
-
 editBtn.addEventListener("click", popupOpenEditProfile); //Открыть
 popupCloseBtnEditProfile.addEventListener("click", closePopup); //Закрыть
 
@@ -81,100 +119,20 @@ function formSubmitHandler(evt) {
 }
 formBtnEditProfile.addEventListener("submit", formSubmitHandler);
 
-//-------------------------------------------------------------------------------------------------------
-
-//Попап добавления карточки
-addCardBtn.addEventListener("click", () => {
-  openPopup(popupAddCard);
-}); //Открыть
-popupCloseBtnAddCard.addEventListener("click", closePopup); //Закрыть
-
-//-------------------------------------------------------------------------------------------------------
-
-//Открыть попап картинки
-function handleZoomImg(nameValue, linkValue) {
-  openPopup(popupZoomImg);
-  popupImg.src = linkValue;
-  popupCaption.textContent = nameValue;
-}
-popupZoomCloseBtn.addEventListener("click", closePopup); //Закрыть
-
-//-------------------------------------------------------------------------------------------------------
-
-//Удалить карточку
-function handleDelete(evt) {
-  evt.target.closest(".card").remove();
-}
-
-//Лайк карточки
-function handleLike(evt) {
-  evt.target.closest(".card__like-btn").classList.toggle("card__like-btn_active");
-}
-
-//Отрисовать 6 карточек
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
-//-------------------------------------------------------------------------------------------------------
-
-const cardTemplate = document.querySelector("#card-template").content.querySelector(".card");
-
-//Создать карточку
-function createCard(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__image");
-
-  cardImage.addEventListener("click", () =>
-    handleZoomImg(data.name, data.link)
-  );
-  cardElement.querySelector(".card__delete-btn").addEventListener("click", handleDelete);
-  cardElement.querySelector(".card__like-btn").addEventListener("click", handleLike);
-
-  cardElement.querySelector(".card__title").textContent = data.name;
-  cardImage.src = data.link;
-  cardImage.alt = data.name;
-
-  return cardElement;
-}
-
-//Отрисовать карточку
-function renderCard(data, cardlist) {
-  cardlist.prepend(createCard(data));
-}
-
-//Отрисовать 6 первых карточек
-initialCards.forEach((data) => renderCard(data, cards));
-
 //делает кнопку отправки формы неактивной
 function makeButtonDisabled (formBtn) {
   const popupSubmitBtn = formBtn.querySelector('.popup__button');
   popupSubmitBtn.classList.add("popup__button_disabled");
   popupSubmitBtn.disabled = true;
 }
+
+//-------------------------------------------------------------------------------------------------------
+//Попап добавления карточки
+addCardBtn.addEventListener("click", () => {
+  openPopup(popupAddCard);
+}); //Открыть
+
+popupCloseBtnAddCard.addEventListener("click", closePopup); //Закрыть
 
 //Добавить карточку кнопкой 'Создать'
 function handleSubmitAddCard(evt) {
@@ -184,13 +142,37 @@ function handleSubmitAddCard(evt) {
     name: titleInput.value,
     link: linkInput.value,
   };
-
-  renderCard(cardInput, cards);
+  const card = new Card(cardInput, '.card-template', handleZoomImg);
+  const cardElement = card.generateCard();
+  cards.prepend(cardElement);
 
   formBtnAddCard.reset();
   makeButtonDisabled(formBtnAddCard);
-
   closePopup();
 }
 
 formBtnAddCard.addEventListener("submit", handleSubmitAddCard);
+
+//Открыть попап картинки
+function handleZoomImg(nameValue, linkValue) {
+  openPopup(popupZoomImg);
+  popupImg.src = linkValue;
+  popupCaption.textContent = nameValue;
+}
+popupZoomCloseBtn.addEventListener("click", closePopup); //Закрыть
+
+//Валидация форм
+const configValidation = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__input-error_type_active",
+}
+
+const popupEditProfileValidation = new FormValidator(configValidation, popupEditProfile);
+popupEditProfileValidation.enableValidation();
+
+const popupAddCardValidation = new FormValidator (configValidation, popupAddCard);
+popupAddCardValidation.enableValidation();
