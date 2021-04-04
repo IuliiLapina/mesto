@@ -1,4 +1,4 @@
-export class Card {
+export default class Card {
   constructor(data, cardSelector, handleZoomImg) {
     this._name = data.name;
     this._link = data.link;
@@ -7,8 +7,7 @@ export class Card {
   }
 
   _getTemplate() {
-    const cardElement = document
-      .querySelector(this._cardSelector)
+    const cardElement = this._cardSelector
       .content.querySelector(".card")
       .cloneNode(true);
 
@@ -40,8 +39,7 @@ export class Card {
         this._handleLike();
       });
 
-    this._element
-      .querySelector(".card__image")
+    this._image
       .addEventListener("click", () =>
         this._handleZoomImg(this._name, this._link)
       );

@@ -1,4 +1,4 @@
-export class FormValidator {
+export default class FormValidator {
   constructor(config, formElement) {
     this._config = config;
     this._formElement = formElement;
@@ -54,6 +54,11 @@ export class FormValidator {
       });
     });
   };
+
+  resetInputError() {
+    this._inputList.forEach(inputErrorElement => this._hideInputError(inputErrorElement));
+    this._toggleButtonState();
+  }
 
   enableValidation () {
     const formList = Array.from(document.querySelectorAll(this._config.formSelector));

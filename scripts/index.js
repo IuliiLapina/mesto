@@ -1,5 +1,6 @@
-import { Card } from "./Card.js";
-import {FormValidator} from './FormValidator.js';
+import Card from "./Card.js";
+import FormValidator from './FormValidator.js';
+import {initialCards} from './initialCards.js';
 
 const popupZoomImg = document.querySelector(".popup-zoom-img");
 const popupImg = popupZoomImg.querySelector(".popup__zoom-img");
@@ -27,48 +28,20 @@ const formBtnAddCard = popupAddCard.querySelector(".popup__form");
 
 const popupZoomCloseBtn = content.querySelector(".popup__close-btn-zoom-img");
 
+const popups = document.querySelectorAll('.popup');
 const contentCards = document.querySelector(".content-cards");
 const cards = contentCards.querySelector(".cards");
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+const cardSelector = document.querySelector(".card-template");
 
-//Отрисуем 6 карточек
-initialCards.forEach((item) => {
-  const card = new Card(item, '.card-template', handleZoomImg);  // Создадим экземпляр карточки
-  const cardElement = card.generateCard();  // Создаём карточку и возвращаем наружу
-  cards.prepend(cardElement);
-});
+const configValidation = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__input-error_type_active",
+}
 
 //Открыть попап
 function openPopup(popup) {
@@ -77,15 +50,24 @@ function openPopup(popup) {
 }
 
 //Закрыть попап
-function closePopup() {
-  document.querySelector(".popup_opened").classList.remove("popup_opened");
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
+
+  document.removeEventListener('keydown', handleEscClick);
+  resetPopupInputs();
+}
+
+//после закрытия попапа сбросить поля создания карточки, сбросить комментарии валидации
+function resetPopupInputs () {
+  formBtnAddCard.reset();
+  popupAddCardValidation.resetInputError();
+  popupEditProfileValidation.resetInputError();
 }
 
 //закрытие всех попапов кликом на крест и оверлей
-const popups = document.querySelectorAll('.popup')
 popups.forEach((popup) => {
-    popup.addEventListener('click', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-btn')) {
             closePopup(popup)
         }
     })
@@ -94,12 +76,18 @@ popups.forEach((popup) => {
 //Закрыть попап Esc
 const handleEscClick = (evt) => {
   if (evt.key === 'Escape') {
-    closePopup();
-    document.removeEventListener('keydown', handleEscClick);
+    if (evt.target.classList.contains('profile__edit-button')) {
+      closePopup(popupEditProfile);
+    }
+    if (evt.target.classList.contains('profile__add-button')) {
+      closePopup(popupAddCard);
+    }
+    if (evt.target.classList.contains('all-content-page')) {
+      closePopup(popupZoomImg);
+    }
   }
 }
 
-//-------------------------------------------------------------------------------------------------------
 //Открыть попап редактирования профиля, добавить в поля попапа значения со страницы
 function popupOpenEditProfile() {
   nameInput.value = nameProfile.textContent;
@@ -114,25 +102,28 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   jobProfile.textContent = jobInput.value;
   nameProfile.textContent = nameInput.value;
-  makeButtonDisabled(formBtnEditProfile);
-  closePopup();
+
+  closePopup(popupEditProfile);
 }
 formBtnEditProfile.addEventListener("submit", formSubmitHandler);
 
-//делает кнопку отправки формы неактивной
-function makeButtonDisabled (formBtn) {
-  const popupSubmitBtn = formBtn.querySelector('.popup__button');
-  popupSubmitBtn.classList.add("popup__button_disabled");
-  popupSubmitBtn.disabled = true;
-}
-
-//-------------------------------------------------------------------------------------------------------
 //Попап добавления карточки
 addCardBtn.addEventListener("click", () => {
   openPopup(popupAddCard);
 }); //Открыть
 
 popupCloseBtnAddCard.addEventListener("click", closePopup); //Закрыть
+
+function createCard (cardInput, cardSelector) {
+  const card = new Card(cardInput, cardSelector, handleZoomImg);
+  const cardElement = card.generateCard();
+  cards.prepend(cardElement);
+}
+
+//Отрисуем 6 карточек
+initialCards.forEach((item) => {
+  createCard(item, cardSelector);
+});
 
 //Добавить карточку кнопкой 'Создать'
 function handleSubmitAddCard(evt) {
@@ -142,13 +133,9 @@ function handleSubmitAddCard(evt) {
     name: titleInput.value,
     link: linkInput.value,
   };
-  const card = new Card(cardInput, '.card-template', handleZoomImg);
-  const cardElement = card.generateCard();
-  cards.prepend(cardElement);
 
-  formBtnAddCard.reset();
-  makeButtonDisabled(formBtnAddCard);
-  closePopup();
+  createCard (cardInput, cardSelector);
+  closePopup(popupAddCard);
 }
 
 formBtnAddCard.addEventListener("submit", handleSubmitAddCard);
@@ -158,19 +145,11 @@ function handleZoomImg(nameValue, linkValue) {
   openPopup(popupZoomImg);
   popupImg.src = linkValue;
   popupCaption.textContent = nameValue;
+  popupCaption.alt = nameValue;
 }
 popupZoomCloseBtn.addEventListener("click", closePopup); //Закрыть
 
 //Валидация форм
-const configValidation = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__input-error_type_active",
-}
-
 const popupEditProfileValidation = new FormValidator(configValidation, popupEditProfile);
 popupEditProfileValidation.enableValidation();
 
