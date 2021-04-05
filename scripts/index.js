@@ -54,14 +54,6 @@ function closePopup(popup) {
   popup.classList.remove("popup_opened");
 
   document.removeEventListener('keydown', handleEscClick);
-  resetPopupInputs();
-}
-
-//после закрытия попапа сбросить поля создания карточки, сбросить комментарии валидации
-function resetPopupInputs () {
-  formBtnAddCard.reset();
-  popupAddCardValidation.resetInputError();
-  popupEditProfileValidation.resetInputError();
 }
 
 //закрытие всех попапов кликом на крест и оверлей
@@ -76,22 +68,15 @@ popups.forEach((popup) => {
 //Закрыть попап Esc
 const handleEscClick = (evt) => {
   if (evt.key === 'Escape') {
-    if (evt.target.classList.contains('profile__edit-button')) {
-      closePopup(popupEditProfile);
-    }
-    if (evt.target.classList.contains('profile__add-button')) {
-      closePopup(popupAddCard);
-    }
-    if (evt.target.classList.contains('all-content-page')) {
-      closePopup(popupZoomImg);
+    closePopup(document.querySelector('.popup_opened'));
     }
   }
-}
 
 //Открыть попап редактирования профиля, добавить в поля попапа значения со страницы
 function popupOpenEditProfile() {
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
+  popupEditProfileValidation.resetInputError();
   openPopup(popupEditProfile);
 }
 editBtn.addEventListener("click", popupOpenEditProfile); //Открыть
@@ -109,6 +94,8 @@ formBtnEditProfile.addEventListener("submit", formSubmitHandler);
 
 //Попап добавления карточки
 addCardBtn.addEventListener("click", () => {
+  formBtnAddCard.reset();
+  popupAddCardValidation.resetInputError();
   openPopup(popupAddCard);
 }); //Открыть
 
@@ -116,13 +103,12 @@ popupCloseBtnAddCard.addEventListener("click", closePopup); //Закрыть
 
 function createCard (cardInput, cardSelector) {
   const card = new Card(cardInput, cardSelector, handleZoomImg);
-  const cardElement = card.generateCard();
-  cards.prepend(cardElement);
+  return card.generateCard();
 }
 
 //Отрисуем 6 карточек
 initialCards.forEach((item) => {
-  createCard(item, cardSelector);
+  cards.prepend(createCard (item, cardSelector));
 });
 
 //Добавить карточку кнопкой 'Создать'
@@ -134,7 +120,7 @@ function handleSubmitAddCard(evt) {
     link: linkInput.value,
   };
 
-  createCard (cardInput, cardSelector);
+  cards.prepend(createCard (cardInput, cardSelector));
   closePopup(popupAddCard);
 }
 
