@@ -1,9 +1,10 @@
+//Возвращает разметку карточки
 export default class Card {
-  constructor(data, cardSelector, handleZoomImg) {
-    this._name = data.name;
+  constructor(data, cardSelector, handleCardClick) {
+    this._name = data.title;
     this._link = data.link;
     this._cardSelector = cardSelector;
-    this._handleZoomImg = handleZoomImg;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -41,7 +42,7 @@ export default class Card {
 
     this._image
       .addEventListener("click", () =>
-        this._handleZoomImg(this._name, this._link)
+        this._handleCardClick(this._name, this._link)
       );
   }
 
