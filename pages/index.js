@@ -1,4 +1,13 @@
-import { configValidation, cardSelector, addCardBtn, popupAddCard, aboutInput, nameInput, editBtn, popupEditProfile} from "../scripts/utils/constants.js";
+import {
+  configValidation,
+  cardSelector,
+  addCardBtn,
+  popupAddCard,
+  aboutInput,
+  nameInput,
+  editBtn,
+  popupEditProfile,
+} from "../scripts/utils/constants.js";
 import { initialCards } from "../scripts/utils/initialCards.js";
 
 import Card from "../scripts/components/Card.js";
@@ -7,7 +16,6 @@ import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
-
 
 //Валидация форм
 const popupEditProfileValidation = new FormValidator(
@@ -25,7 +33,7 @@ popupAddCardValidation.enableValidation();
 //попап редактирования профиля
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
-  aboutSelector: ".profile__subtitle"
+  aboutSelector: ".profile__subtitle",
 });
 
 function popupProfileInputsValues() {
@@ -38,7 +46,7 @@ const popupWithFormEditProfile = new PopupWithForm({
   handleFormSubmit: (formData) => {
     userInfo.setUserInfo(formData.name, formData.about);
     popupWithFormEditProfile.close();
-  }
+  },
 });
 popupWithFormEditProfile.setEventListeners();
 
@@ -58,7 +66,7 @@ const popupWithFormAddCard = new PopupWithForm({
     cardList.addItem(generateCard);
 
     popupWithFormAddCard.close();
-  }
+  },
 });
 popupWithFormAddCard.setEventListeners();
 
@@ -94,5 +102,3 @@ const cardList = new Section(
   ".cards"
 );
 cardList.renderItems();
-
-
