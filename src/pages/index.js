@@ -1,3 +1,4 @@
+import '../pages/index.css';
 import {
   configValidation,
   cardSelector,
@@ -36,7 +37,7 @@ const userInfo = new UserInfo({
   aboutSelector: ".profile__subtitle",
 });
 
-function popupProfileInputsValues() {
+function formEditProfileInputsValue() {
   nameInput.value = userInfo.getUserInfo().name;
   aboutInput.value = userInfo.getUserInfo().about;
 }
@@ -53,7 +54,7 @@ popupWithFormEditProfile.setEventListeners();
 editBtn.addEventListener("click", handlePopupOpenEditProfile); //Открыть редактирование профиля
 function handlePopupOpenEditProfile() {
   popupEditProfileValidation.resetInputError();
-  popupProfileInputsValues();
+  formEditProfileInputsValue();
 
   popupWithFormEditProfile.open();
 }

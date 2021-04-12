@@ -3,20 +3,19 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
   </head>
   <body class="all-content-page">
       <div class="page">
 
         <header class="header">
-            <img class="header__logo" src="./images/logo/Vector.svg" alt="Логотип 'Mesto'">
+            <img class="header__logo" src="<%=require('../images/logo/Vector.svg')%>" alt="Логотип 'Mesto'">
         </header>
 
         <main class="content">
 
           <section class="profile">
-              <img class="profile__avatar" src="./images/avatar/image.jpg" alt="Аватар профиля">
+              <img class="profile__avatar" src="<%=require('../images/avatar/image.jpg')%>" alt="Аватар профиля">
               <div class="profile__info">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
                 <button class="profile__edit-button" type="button" aria-label="Зедактировать профиль"></button>
@@ -101,7 +100,5 @@
           </div>
         </li>
       </template>
-
-      <script src='./pages/index.js' type="module" defer></script>
      </body>
 </html>
