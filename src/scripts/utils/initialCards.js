@@ -1,32 +1,10 @@
-export const initialCards = [
+const initialCards = [
   {
-    title: "Архыз",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+    name: 'Жопа',
+    link: 'https://kultrab.com/en/wp-content/uploads/sites/2/2020/06/tapki_zhopa_11-1.jpg'
   },
   {
-    title: "Челябинская область",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    title: "Иваново",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    title: "Камчатка",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    title: "Холмогорский район",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    title: "Байкал",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
+    name: 'Жопа',
+    link: 'https://kultrab.com/en/wp-content/uploads/sites/2/2020/06/tapki_zhopa_11-1.jpg'
+  }
 ];

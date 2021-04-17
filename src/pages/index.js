@@ -1,4 +1,6 @@
-import '../pages/index.css';
+import "../pages/index.css";
+import regeneratorRuntime from "../../node_modules/regenerator-runtime";
+import "regenerator-runtime/runtime.js";
 import {
   configValidation,
   cardSelector,
@@ -17,6 +19,7 @@ import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
+import Api from "../scripts/components/Api.js";
 
 //Валидация форм
 const popupEditProfileValidation = new FormValidator(
@@ -35,6 +38,7 @@ popupAddCardValidation.enableValidation();
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   aboutSelector: ".profile__subtitle",
+  avatarSelector: ".profile__avatar"
 });
 
 function formEditProfileInputsValue() {
@@ -91,6 +95,7 @@ function createCard(cardInput, cardSelector) {
   return card.generateCard();
 }
 
+
 //Отрисуем 6 первых карточек
 const cardList = new Section(
   {
@@ -102,4 +107,27 @@ const cardList = new Section(
   },
   ".cards"
 );
-cardList.renderItems();
+//cardList.renderItems();
+
+
+const api = new Api({
+  address: "https://mesto.nomoreparties.co",
+  token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9",
+});
+/*
+api
+  .getInitialCards()
+  .then((result) => {
+    console.log(result);
+    cardList.renderItems(result);
+  })
+  .catch((err) => console.log("Ошибка при получении данных"));
+
+  */
+api
+  .getUserData()
+  .then((result) => {
+    userInfo.setUserInfo(result.name, result.about);
+    userInfo.setUserAvatar(result.avatar);
+  })
+  .catch((err) => console.log("Ошибка при получении данных"));

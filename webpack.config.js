@@ -42,6 +42,11 @@ module.exports = {
       }
     ]
   },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+    },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/pages/index.html' // путь к файлу index.html
