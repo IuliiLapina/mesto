@@ -48,4 +48,23 @@ export default class Api {
       return Promise.reject(`Ошибка ${res.status}`);
     });
   }
+
+  addNewCard (data) {
+    return fetch(`${this._address}/v1/cohort-22/cards`, {
+      method: 'POST',
+      headers: {
+        authorization: this._token,
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    });
+  }
 }

@@ -20,6 +20,8 @@ import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import Api from "../scripts/components/Api.js";
 
+let userId = '';
+
 //Валидация форм
 const popupEditProfileValidation = new FormValidator(
   configValidation,
@@ -49,13 +51,17 @@ function formEditProfileInputsValue() {
 const popupWithFormEditProfile = new PopupWithForm({
   popupSelector: ".popup-edit-profile",
   handleFormSubmit: (formData) => {
-    api.setUserData(formData)
-    .finally(() => {
-      userInfo.setUserInfo(formData.name, formData.about);
-    });
+    api
+      .setUserData(formData)
+      .then(() => {
+        userId = formData.id;
+        userInfo.setUserInfo(formData.name, formData.about);
+      })
+      .catch((err) => console.log("Ошибка при отправке данных"));
     popupWithFormEditProfile.close();
-  }
+  },
 });
+console.log(userId);
 popupWithFormEditProfile.setEventListeners();
 
 editBtn.addEventListener("click", handlePopupOpenEditProfile); //Открыть редактирование профиля
@@ -67,12 +73,16 @@ function handlePopupOpenEditProfile() {
 }
 
 //попап добавления карточки
+//отправляем карточку на сервер
 const popupWithFormAddCard = new PopupWithForm({
   popupSelector: ".popup-add-card",
   handleFormSubmit: (formData) => {
-    const generateCard = createCard(formData, cardSelector);
-    newcardList.addItem(generateCard);
-
+    api.addNewCard(formData)
+    .then(() => {
+      const generateCard = createCard(formData, cardSelector);
+      newcardList.addItem(generateCard);
+    })
+    .catch((err) => console.log("Ошибка при отправке данных"));
     popupWithFormAddCard.close();
   },
 });
@@ -103,7 +113,7 @@ const newcardList = new Section(
     data: {},
     renderer: (item) => {
       const generateCard = createCard(item, cardSelector);
-      cardList.addItem(generateCard);
+      newcardList.addItem(generateCard);
     },
   },
   ".cards"
@@ -140,4 +150,3 @@ api
     userInfo.setUserAvatar(result.avatar);
   })
   .catch((err) => console.log("Ошибка при получении данных"));
-
