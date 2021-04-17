@@ -11,7 +11,6 @@ import {
   editBtn,
   popupEditProfile,
 } from "../scripts/utils/constants.js";
-import { initialCards } from "../scripts/utils/initialCards.js";
 
 import Card from "../scripts/components/Card.js";
 import FormValidator from "../scripts/components/FormValidator.js";
@@ -68,7 +67,7 @@ const popupWithFormAddCard = new PopupWithForm({
   popupSelector: ".popup-add-card",
   handleFormSubmit: (formData) => {
     const generateCard = createCard(formData, cardSelector);
-    cardList.addItem(generateCard);
+    newcardList.addItem(generateCard);
 
     popupWithFormAddCard.close();
   },
@@ -95,11 +94,9 @@ function createCard(cardInput, cardSelector) {
   return card.generateCard();
 }
 
-
-//Отрисуем 6 первых карточек
-const cardList = new Section(
+const newcardList = new Section(
   {
-    data: initialCards,
+    data: {},
     renderer: (item) => {
       const generateCard = createCard(item, cardSelector);
       cardList.addItem(generateCard);
@@ -107,27 +104,35 @@ const cardList = new Section(
   },
   ".cards"
 );
-//cardList.renderItems();
-
 
 const api = new Api({
   address: "https://mesto.nomoreparties.co",
-  token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9",
+  token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9"
 });
-/*
+
+//берем с сервера карточки
 api
   .getInitialCards()
   .then((result) => {
-    console.log(result);
-    cardList.renderItems(result);
+    const cardList = new Section(
+      {
+        data: result,
+        renderer: (item) => {
+          const generateCard = createCard(item, cardSelector);
+          cardList.addItem(generateCard);
+        },
+      },
+      ".cards"
+    );
+    cardList.renderItems();
   })
   .catch((err) => console.log("Ошибка при получении данных"));
 
-  */
+  //берем с сервера инфо пользователя
 api
   .getUserData()
   .then((result) => {
     userInfo.setUserInfo(result.name, result.about);
     userInfo.setUserAvatar(result.avatar);
   })
-  .catch((err) => console.log("Ошибка при получении данных"));
+  .catch((err) => console.log("Ошибка при получении данных" + err));
