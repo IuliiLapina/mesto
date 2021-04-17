@@ -1,9 +1,9 @@
 export default class Api {
-  constructor({ address, token}) {
+  constructor({ address, token }) {
     this._address = address;
     this._token = token;
   }
-
+//получить инфо пользователя с сервера
   getUserData() {
     return fetch(`${this._address}/v1/cohort-22/users/me`, {
       headers: {
@@ -16,7 +16,7 @@ export default class Api {
       return Promise.reject(`Ошибка ${res.status}`);
     });
   }
-
+//получить карточки с сервера
   getInitialCards() {
     return fetch(`${this._address}/v1/cohort-22/cards`, {
       headers: {
@@ -30,37 +30,22 @@ export default class Api {
     });
   }
 
-
-  /*
-  addNewCard() {
-    return fetch(`${this._address}/v1/cohort-22/cards`, {
-      method: 'POST',
-      headers: {
-          authorization: this._token,
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({data})
-      }
-    )
-    .then(res => {
-      if (res.ok) {
-          return res.json();
-      }
-      return Promise.reject(`Ошибка ${response.status}`)
-  });
-  }
-
-  removeCard(id) {
-    return fetch(`${this._address}/v1/cohort-22/cards${id}`, {
-      method: "DELETE",
+  setUserData(data) {
+    return fetch(`${this._address}/v1/cohort-22/users/me`, {
+      method: 'PATCH',
       headers: {
         authorization: this._token,
+        "Content-type": "application/json"
       },
-    }).then((res) =>
-      res.ok
-        ? Promise.resolve("success")
-        : Promise.reject(`Ошибка ${res.status}`)
-    );
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about
+      }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    });
   }
-  */
 }

@@ -37,7 +37,7 @@ popupAddCardValidation.enableValidation();
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   aboutSelector: ".profile__subtitle",
-  avatarSelector: ".profile__avatar"
+  avatarSelector: ".profile__avatar",
 });
 
 function formEditProfileInputsValue() {
@@ -45,12 +45,16 @@ function formEditProfileInputsValue() {
   aboutInput.value = userInfo.getUserInfo().about;
 }
 
+//изменяем и отправляем данные пользователя на сервер
 const popupWithFormEditProfile = new PopupWithForm({
   popupSelector: ".popup-edit-profile",
   handleFormSubmit: (formData) => {
-    userInfo.setUserInfo(formData.name, formData.about);
+    api.setUserData(formData)
+    .finally(() => {
+      userInfo.setUserInfo(formData.name, formData.about);
+    });
     popupWithFormEditProfile.close();
-  },
+  }
 });
 popupWithFormEditProfile.setEventListeners();
 
@@ -107,7 +111,7 @@ const newcardList = new Section(
 
 const api = new Api({
   address: "https://mesto.nomoreparties.co",
-  token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9"
+  token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9",
 });
 
 //берем с сервера карточки
@@ -128,11 +132,12 @@ api
   })
   .catch((err) => console.log("Ошибка при получении данных"));
 
-  //берем с сервера инфо пользователя
+//берем с сервера инфо пользователя
 api
   .getUserData()
   .then((result) => {
     userInfo.setUserInfo(result.name, result.about);
     userInfo.setUserAvatar(result.avatar);
   })
-  .catch((err) => console.log("Ошибка при получении данных" + err));
+  .catch((err) => console.log("Ошибка при получении данных"));
+
