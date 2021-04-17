@@ -1,11 +1,12 @@
 //Возвращает разметку карточки
 export default class Card {
-  constructor(data, cardSelector, handleCardClick) {
+  constructor(data, cardSelector, handleCardClick, handleOpenPopupDeleteCard) {
     this._name = data.name;
     this._link = data.link;
-    this._id = data.id;
+    this._id = data._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleOpenPopupDeleteCard = handleOpenPopupDeleteCard;
   }
 
   _getTemplate() {
@@ -32,7 +33,7 @@ export default class Card {
     this._element
       .querySelector(".card__delete-btn")
       .addEventListener("click", () => {
-        this._handleDelete();
+        this._handleOpenPopupDeleteCard();
       });
 
     this._element
@@ -46,12 +47,12 @@ export default class Card {
         this._handleCardClick(this._name, this._link)
       );
   }
-
+/*
   _handleDelete() {
     this._element.remove();
     this._element = null;
   }
-
+*/
   _handleLike() {
     this._element
       .querySelector(".card__like-btn")

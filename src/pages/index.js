@@ -54,14 +54,12 @@ const popupWithFormEditProfile = new PopupWithForm({
     api
       .setUserData(formData)
       .then(() => {
-        userId = formData.id;
         userInfo.setUserInfo(formData.name, formData.about);
       })
       .catch((err) => console.log("Ошибка при отправке данных"));
     popupWithFormEditProfile.close();
   },
 });
-console.log(userId);
 popupWithFormEditProfile.setEventListeners();
 
 editBtn.addEventListener("click", handlePopupOpenEditProfile); //Открыть редактирование профиля
@@ -79,6 +77,7 @@ const popupWithFormAddCard = new PopupWithForm({
   handleFormSubmit: (formData) => {
     api.addNewCard(formData)
     .then(() => {
+      userId = formData.id;
       const generateCard = createCard(formData, cardSelector);
       newcardList.addItem(generateCard);
     })
@@ -86,6 +85,9 @@ const popupWithFormAddCard = new PopupWithForm({
     popupWithFormAddCard.close();
   },
 });
+
+console.log(userId);
+
 popupWithFormAddCard.setEventListeners();
 
 addCardBtn.addEventListener("click", handlePopupOpenAddCard); //Открыть редактирование профиля
@@ -93,6 +95,15 @@ function handlePopupOpenAddCard() {
   popupAddCardValidation.resetInputError();
   popupWithFormAddCard.open();
 }
+
+//попап удаления карточки
+const popupWithFormDeleteCard = new PopupWithForm({
+  popupSelector: ".popup-delete-card",
+  handleFormSubmit: () => {
+  }
+})
+
+popupWithFormDeleteCard.setEventListeners();
 
 //Попап картинки
 const popupZoomCard = new PopupWithImage(".popup-zoom-img");
@@ -103,7 +114,8 @@ function createCard(cardInput, cardSelector) {
   const card = new Card(
     cardInput,
     cardSelector,
-    popupZoomCard.open.bind(popupZoomCard)
+    popupZoomCard.open.bind(popupZoomCard),
+    popupWithFormDeleteCard.open.bind(popupWithFormDeleteCard)
   );
   return card.generateCard();
 }
@@ -146,7 +158,7 @@ api
 api
   .getUserData()
   .then((result) => {
-    userInfo.setUserInfo(result.name, result.about);
+    userInfo.setUserInfo(result.name, result.about, result._id);
     userInfo.setUserAvatar(result.avatar);
   })
   .catch((err) => console.log("Ошибка при получении данных"));

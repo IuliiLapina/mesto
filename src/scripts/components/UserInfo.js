@@ -22,9 +22,10 @@ export default class UserInfo {
   }
 
 //принимает новые данные пользователя
-  setUserInfo(name, about) {
+  setUserInfo(name, about, id) {
     this._nameSelector.textContent = name;
     this._aboutSelector.textContent = about;
+    this._id = id;
   }
 
   setUserAvatar(avatar) {

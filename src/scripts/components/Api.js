@@ -39,7 +39,8 @@ export default class Api {
       },
       body: JSON.stringify({
         name: data.name,
-        about: data.about
+        about: data.about,
+        avatar: data.avatar
       }),
     }).then((res) => {
       if (res.ok) {
@@ -61,6 +62,21 @@ export default class Api {
         link: data.link
       }),
     }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    });
+  }
+
+  setlikeCard (id) {
+    return fetch(`${this._address}/v1/cohort-22/cards/likes/${id}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._token
+      }
+    })
+      .then((res) => {
       if (res.ok) {
         return res.json();
       }
