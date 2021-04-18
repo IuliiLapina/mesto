@@ -3,116 +3,88 @@ export default class Api {
     this._address = address;
     this._token = token;
   }
-//получить инфо пользователя с сервера
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
+  //получить инфо пользователя с сервера
   getUserData() {
     return fetch(`${this._address}/v1/cohort-22/users/me`, {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
-//получить карточки с сервера
+
+  //получить карточки с сервера
   getInitialCards() {
     return fetch(`${this._address}/v1/cohort-22/cards`, {
       headers: {
         authorization: this._token,
       },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
   setUserData(data) {
     return fetch(`${this._address}/v1/cohort-22/users/me`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
         authorization: this._token,
-        "Content-type": "application/json"
+        "Content-type": "application/json",
       },
       body: JSON.stringify({
         name: data.name,
         about: data.about,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
-  setUserAvatar (link) {
+  setUserAvatar(link) {
     return fetch(`${this._address}/v1/cohort-22/users/me/avatar`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
         authorization: this._token,
-        "Content-type": "application/json"
+        "Content-type": "application/json",
       },
       body: JSON.stringify({
-        avatar: link
+        avatar: link,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
-  addNewCard (data) {
+  addNewCard(data) {
     return fetch(`${this._address}/v1/cohort-22/cards`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         authorization: this._token,
-        "Content-type": "application/json"
+        "Content-type": "application/json",
       },
       body: JSON.stringify({
         name: data.name,
-        link: data.link
+        link: data.link,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+    }).then(this._checkResponse);
   }
 
-  setCardLike (id) {
+  setCardLike(id) {
     return fetch(`${this._address}/v1/cohort-22/cards/likes/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        authorization: this._token
-      }
-    })
-      .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+        authorization: this._token,
+      },
+    }).then(this._checkResponse);
   }
 
-  deleteCardLike (id) {
+  deleteCardLike(id) {
     return fetch(`${this._address}/v1/cohort-22/cards/likes/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        authorization: this._token
-      }
-    })
-      .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    });
+        authorization: this._token,
+      },
+    }).then(this._checkResponse);
   }
 }

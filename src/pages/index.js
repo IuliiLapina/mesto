@@ -12,7 +12,10 @@ import {
   popupEditProfile,
   avatarEditBtn,
   popupEditAvatar,
-  avatarInput
+  popupEditAvatarSaveBtn,
+  popupEditProfileSaveBtn,
+  popupAddCardSaveBtn,
+  popupDeleteCardSaveBtn
 } from "../scripts/utils/constants.js";
 
 import Card from "../scripts/components/Card.js";
@@ -62,9 +65,12 @@ const popupWithFormEditProfile = new PopupWithForm({
       .setUserData(formData)
       .then(() => {
         userInfo.setUserInfo(formData.name, formData.about);
+        popupWithFormEditProfile.close();
       })
-      .catch((err) => console.log(err));
-    popupWithFormEditProfile.close();
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupEditProfileSaveBtn.value = "Сохранение..."
+      })
   },
 });
 popupWithFormEditProfile.setEventListeners();
@@ -73,6 +79,7 @@ editBtn.addEventListener("click", handlePopupOpenEditProfile); //Открыть 
 function handlePopupOpenEditProfile() {
   popupEditProfileValidation.resetInputError();
   formEditProfileInputsValue();
+  popupEditProfileSaveBtn.value = "Сохранить"
 
   popupWithFormEditProfile.open();
 }
@@ -85,9 +92,12 @@ const popupWithFormEditAvatar = new PopupWithForm({
     .setUserAvatar(formData.avatar)
     .then(() => {
       userInfo.setUserAvatar(formData.avatar);
+      popupWithFormEditAvatar.close();
     })
-    .catch((err) => console.log(err));
-    popupWithFormEditAvatar.close();
+    .catch((err) => console.log(err))
+    .finally(() => {
+      popupEditAvatarSaveBtn.value = "Сохранение...";
+    })
   },
 });
 popupWithFormEditAvatar.setEventListeners();
@@ -96,6 +106,7 @@ avatarEditBtn.addEventListener("click", handlePopupOpenEditAvatar);
 
 function handlePopupOpenEditAvatar() {
   popupEditAvatarValidation.resetInputError();
+  popupEditAvatarSaveBtn.value = "Сохранить"
   popupWithFormEditAvatar.open();
 }
 
@@ -109,9 +120,12 @@ const popupWithFormAddCard = new PopupWithForm({
       .then(() => {
         const generateCard = createCard(formData, cardSelector);
         newcardList.addItem(generateCard);
+        popupWithFormAddCard.close();
       })
-      .catch((err) => console.log(err));
-    popupWithFormAddCard.close();
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupAddCardSaveBtn.value = "Создание...";
+      })
   },
 });
 
@@ -120,6 +134,7 @@ popupWithFormAddCard.setEventListeners();
 addCardBtn.addEventListener("click", handlePopupOpenAddCard); //Открыть редактирование профиля
 function handlePopupOpenAddCard() {
   popupAddCardValidation.resetInputError();
+  popupAddCardSaveBtn.value = "Создать";
   popupWithFormAddCard.open();
 }
 
@@ -132,12 +147,16 @@ const popupWithFormDeleteCard = new PopupWithForm({
       .then(() => {
         if ((data._id = userData)) {
         }
+      popupWithFormDeleteCard.close();
       })
-      .catch((err) => console.log(err));
-    popupWithFormDeleteCard.close();
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupDeleteCardSaveBtn.value = "Удаление...";
+      })
   },
 });
 popupWithFormDeleteCard.setEventListeners();
+popupWithFormDeleteCard.value = "Удалить"
 
 //Попап картинки
 const popupZoomCard = new PopupWithImage(".popup-zoom-img");

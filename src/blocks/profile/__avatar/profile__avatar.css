@@ -1,5 +1,6 @@
 .profile__avatar {
   height: 120px;
+  width: 120px;
   border-radius: 50%;
   grid-area: avatar;
   background-size: cover;
@@ -9,5 +10,4 @@
 
 .profile__avatar:hover {
   opacity: 0.8;
-  background-image: url("../../../images/avatar/avatar-ico.png");
 }
