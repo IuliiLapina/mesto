@@ -26,7 +26,7 @@ import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import Api from "../scripts/components/Api.js";
-import { info } from "autoprefixer";
+import { data, info } from "autoprefixer";
 
 //Валидация форм
 const popupEditProfileValidation = new FormValidator(
@@ -118,11 +118,13 @@ const popupWithFormAddCard = new PopupWithForm({
   popupSelector: ".popup-add-card",
   handleFormSubmit: (formData) => {
     formData.likes = [];
+    formData.owner = [];
+    formData.owner._id = userId;
     api
       .addNewCard(formData)
       .then(() => {
-        const generateCard = createCard(formData, cardSelector);
-        newCardList.addItem(generateCard);
+        const generateCard = createCard(formData, cardSelector, userId);
+        cardList.addItem(generateCard);
         popupWithFormAddCard.close();
       })
       .catch((err) => console.log(err))
@@ -142,13 +144,14 @@ function handlePopupOpenAddCard() {
 }
 
 //попап удаления карточки
+let cardToDelete = null;
 const popupWithFormDeleteCard = new PopupWithForm({
   popupSelector: ".popup-delete-card",
   handleFormSubmit: () => {
     api
-      .deleteCard(cardToRemove._id)
+      .deleteCard(cardToDelete)
       .then(() => {
-        cardToRemove._id.remove();
+        cardToDelete = null;
         popupWithFormDeleteCard.close();
       })
       .catch((err) => console.log(err))
@@ -172,36 +175,30 @@ function createCard(cardData, cardSelector, userId) {
     popupZoomCard.open.bind(popupZoomCard),
     {
       handleRemoveClick: () => {
+        cardToDelete = cardData;
         popupWithFormDeleteCard.open();
+      }
+    },
+    {
+      handleLikeClick: () => {
+
       }
     }
   );
   return card.generateCard(userId);
 }
 
-const newCardList = new Section(
-  {
-    data: {},
-    renderer: (item) => {
-      const generateCard = createCard(item, cardSelector);
-      newCardList.addItem(generateCard);
-      console.log(item._id, item.owner._id)
-    },
-  },
-  ".cards"
-);
-
 const api = new Api({
   address: "https://mesto.nomoreparties.co",
   token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9",
 });
-
+let cardList = null;
 //берем с сервера карточки
 api
   .getInitialCards()
   .then((initialCards) => {
-    console.log(userId);
-    const cardList = new Section(
+    initialCards.reverse();
+    cardList = new Section(
       {
         data: initialCards,
         renderer: (item) => {

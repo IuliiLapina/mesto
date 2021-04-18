@@ -1,10 +1,9 @@
 //Возвращает разметку карточки
 //import cardSelector from '../utils/constants.js';
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, {handleRemoveClick}, handleLikeClick) {
+  constructor(data, cardSelector, handleCardClick, {handleRemoveClick}, {handleLikeClick}) {
     this._name = data.name;
     this._link = data.link;
-    this._id = data._id;
     this._likes = data.likes;
     this._owner = data.owner;
 
@@ -30,20 +29,21 @@ export default class Card {
     this._image.alt = this._name;
     this._image.src = this._link;
     this._element.querySelector(".card__like-quantity").textContent = this._likes.length;
-
     this._setEventListeners(userId);
+
     return this._element;
   }
 
   _setEventListeners(userId) {
-    if (this._owner._id === userId) {
+    if ((this._owner._id === userId) || this._owner === null) {
       console.log("There will be delete listener")
       this._element
         .querySelector(".card__delete-btn")
         .addEventListener("click", () => {
           this._handleRemoveClick();
         });
-    } else {
+    } else
+      {
       console.log("There will not be delete listener")
     }
 
@@ -59,21 +59,25 @@ export default class Card {
       );
   }
 
-  isLiked() {
-
+  isLiked(userId) {
+    this._likes.forEach(element => {
+      if (element === userId) {
+       return true;
+      }
+    });
+    return false;
   }
-  deleteCard() {
-    this._element.remove();
-    this._element = null;
-  }
 
-  setLike() {
+  setLike(userId) {
     this._element
       .querySelector(".card__like-btn")
-      .classList.toggle("card__like-btn_active");
+      .classList.add("card__like-btn_active");
   }
 
-  addBinAndLikes(userId) {
-
+  removeLike(userId) {
+    this._element
+      .querySelector(".card__like-btn")
+      .classList.remove("card__like-btn_active");
   }
+
 }
