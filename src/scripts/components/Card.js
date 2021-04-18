@@ -1,6 +1,7 @@
 //Возвращает разметку карточки
+//import cardSelector from '../utils/constants.js';
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, handleRemoveClick, handleLikeClick) {
+  constructor(data, cardSelector, handleCardClick, {handleRemoveClick}, handleLikeClick) {
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
@@ -21,7 +22,7 @@ export default class Card {
     return cardElement;
   }
 
-  generateCard() {
+  generateCard(userId) {
     this._element = this._getTemplate();
     this._image = this._element.querySelector(".card__image");
 
@@ -30,16 +31,21 @@ export default class Card {
     this._image.src = this._link;
     this._element.querySelector(".card__like-quantity").textContent = this._likes.length;
 
-    this._setEventListeners();
+    this._setEventListeners(userId);
     return this._element;
   }
 
-  _setEventListeners() {
-    this._element
-      .querySelector(".card__delete-btn")
-      .addEventListener("click", () => {
-        this._handleRemoveClick();
-      });
+  _setEventListeners(userId) {
+    if (this._owner._id === userId) {
+      console.log("There will be delete listener")
+      this._element
+        .querySelector(".card__delete-btn")
+        .addEventListener("click", () => {
+          this._handleRemoveClick();
+        });
+    } else {
+      console.log("There will not be delete listener")
+    }
 
     this._element
       .querySelector(".card__like-btn")

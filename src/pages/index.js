@@ -15,7 +15,8 @@ import {
   popupEditAvatarSaveBtn,
   popupEditProfileSaveBtn,
   popupAddCardSaveBtn,
-  popupDeleteCardSaveBtn
+  popupDeleteCardSaveBtn,
+  cardWithoutBinSelector
 } from "../scripts/utils/constants.js";
 
 import Card from "../scripts/components/Card.js";
@@ -116,6 +117,7 @@ function handlePopupOpenEditAvatar() {
 const popupWithFormAddCard = new PopupWithForm({
   popupSelector: ".popup-add-card",
   handleFormSubmit: (formData) => {
+    formData.likes = [];
     api
       .addNewCard(formData)
       .then(() => {
@@ -163,7 +165,7 @@ const popupZoomCard = new PopupWithImage(".popup-zoom-img");
 popupZoomCard.setEventListeners();
 
 //Про отрисовку карточек
-function createCard(cardData, cardSelector) {
+function createCard(cardData, cardSelector, userId) {
   const card = new Card(
     cardData,
     cardSelector,
@@ -171,11 +173,10 @@ function createCard(cardData, cardSelector) {
     {
       handleRemoveClick: () => {
         popupWithFormDeleteCard.open();
-        cardToRemove = card;
       }
     }
   );
-  return card.generateCard();
+  return card.generateCard(userId);
 }
 
 const newCardList = new Section(
@@ -199,16 +200,18 @@ const api = new Api({
 api
   .getInitialCards()
   .then((initialCards) => {
-    console.log(initialCards);
+    console.log(userId);
     const cardList = new Section(
       {
         data: initialCards,
         renderer: (item) => {
-          if (true) {
-            const generateCard = createCard(item, cardSelector);
+          let generateCard = null;
+          if (item.owner._id === userId) {
+            generateCard = createCard(item, cardSelector, userId);
             cardList.addItem(generateCard);
           } else {
-
+            generateCard = createCard(item, cardWithoutBinSelector);
+            cardList.addItem(generateCard);
           }
 
         },

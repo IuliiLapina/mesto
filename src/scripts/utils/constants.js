@@ -1,5 +1,7 @@
 
 export const cardSelector = document.querySelector(".card-template");
+export const cardWithoutBinSelector = document.querySelector(".card-template-without-bin");
+
 const content = document.querySelector(".content");
 export const popupEditProfile = content.querySelector(".popup-edit-profile");
 export const editBtn = content.querySelector(".profile__edit-button");
