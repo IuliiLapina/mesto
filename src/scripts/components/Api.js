@@ -69,9 +69,24 @@ export default class Api {
     });
   }
 
-  setlikeCard (id) {
+  setCardLike (id) {
     return fetch(`${this._address}/v1/cohort-22/cards/likes/${id}`, {
       method: 'PUT',
+      headers: {
+        authorization: this._token
+      }
+    })
+      .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    });
+  }
+
+  deleteCardLike (id) {
+    return fetch(`${this._address}/v1/cohort-22/cards/likes/${id}`, {
+      method: 'DELETE',
       headers: {
         authorization: this._token
       }

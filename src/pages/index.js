@@ -10,6 +10,8 @@ import {
   nameInput,
   editBtn,
   popupEditProfile,
+  avatarEditBtn,
+  popupEditAvatar,
 } from "../scripts/utils/constants.js";
 
 import Card from "../scripts/components/Card.js";
@@ -19,8 +21,6 @@ import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import Api from "../scripts/components/Api.js";
-
-let userId = '';
 
 //Валидация форм
 const popupEditProfileValidation = new FormValidator(
@@ -32,6 +32,12 @@ popupEditProfileValidation.enableValidation();
 const popupAddCardValidation = new FormValidator(
   configValidation,
   popupAddCard
+);
+popupAddCardValidation.enableValidation();
+
+const popupEditAvatarValidation = new FormValidator(
+  configValidation,
+  popupEditAvatar
 );
 popupAddCardValidation.enableValidation();
 
@@ -56,7 +62,7 @@ const popupWithFormEditProfile = new PopupWithForm({
       .then(() => {
         userInfo.setUserInfo(formData.name, formData.about);
       })
-      .catch((err) => console.log("Ошибка при отправке данных"));
+      .catch((err) => console.log(err));
     popupWithFormEditProfile.close();
   },
 });
@@ -70,23 +76,36 @@ function handlePopupOpenEditProfile() {
   popupWithFormEditProfile.open();
 }
 
+const popupWithFormEditAvatar = new PopupWithForm({
+  popupSelector: ".popup-edit-avatar",
+  handleFormSubmit: () => {
+    popupWithFormEditAvatar.close();
+  },
+});
+popupWithFormEditAvatar.setEventListeners();
+
+avatarEditBtn.addEventListener("click", handlePopupOpenEditAvatar);
+
+function handlePopupOpenEditAvatar() {
+  popupEditAvatarValidation.resetInputError();
+  popupWithFormEditAvatar.open();
+}
+
 //попап добавления карточки
 //отправляем карточку на сервер
 const popupWithFormAddCard = new PopupWithForm({
   popupSelector: ".popup-add-card",
   handleFormSubmit: (formData) => {
-    api.addNewCard(formData)
-    .then(() => {
-      userId = formData.id;
-      const generateCard = createCard(formData, cardSelector);
-      newcardList.addItem(generateCard);
-    })
-    .catch((err) => console.log("Ошибка при отправке данных"));
+    api
+      .addNewCard(formData)
+      .then(() => {
+        const generateCard = createCard(formData, cardSelector);
+        newcardList.addItem(generateCard);
+      })
+      .catch((err) => console.log(err));
     popupWithFormAddCard.close();
   },
 });
-
-console.log(userId);
 
 popupWithFormAddCard.setEventListeners();
 
@@ -99,10 +118,17 @@ function handlePopupOpenAddCard() {
 //попап удаления карточки
 const popupWithFormDeleteCard = new PopupWithForm({
   popupSelector: ".popup-delete-card",
-  handleFormSubmit: () => {
-  }
-})
-
+  handleFormSubmit: (data) => {
+    api
+      .deleteCard(data)
+      .then(() => {
+        if ((data._id = userData)) {
+        }
+      })
+      .catch((err) => console.log(err));
+    popupWithFormDeleteCard.close();
+  },
+});
 popupWithFormDeleteCard.setEventListeners();
 
 //Попап картинки
@@ -110,9 +136,9 @@ const popupZoomCard = new PopupWithImage(".popup-zoom-img");
 popupZoomCard.setEventListeners();
 
 //Про отрисовку карточек
-function createCard(cardInput, cardSelector) {
+function createCard(cardData, cardSelector) {
   const card = new Card(
-    cardInput,
+    cardData,
     cardSelector,
     popupZoomCard.open.bind(popupZoomCard),
     popupWithFormDeleteCard.open.bind(popupWithFormDeleteCard)
@@ -125,7 +151,7 @@ const newcardList = new Section(
     data: {},
     renderer: (item) => {
       const generateCard = createCard(item, cardSelector);
-      newcardList.addItem(generateCard);
+      newcardList.addItem(generateCard, data);
     },
   },
   ".cards"
@@ -145,20 +171,22 @@ api
         data: result,
         renderer: (item) => {
           const generateCard = createCard(item, cardSelector);
-          cardList.addItem(generateCard);
+          cardList.addItem(generateCard, result);
         },
       },
       ".cards"
     );
     cardList.renderItems();
   })
-  .catch((err) => console.log("Ошибка при получении данных"));
+  .catch((err) => console.log(err));
 
 //берем с сервера инфо пользователя
+let userId = "";
 api
   .getUserData()
   .then((result) => {
     userInfo.setUserInfo(result.name, result.about, result._id);
     userInfo.setUserAvatar(result.avatar);
+    userId = result._id;
   })
-  .catch((err) => console.log("Ошибка при получении данных"));
+  .catch((err) => console.log(err));

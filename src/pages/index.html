@@ -15,7 +15,7 @@
         <main class="content">
 
           <section class="profile">
-              <img class="profile__avatar" name="avatar"  alt="Аватар профиля">
+              <div class="profile__avatar" name="avatar"  alt="Аватар профиля"></div>
               <div class="profile__info">
                 <h1 class="profile__title"></h1>
                 <button class="profile__edit-button" type="button" aria-label="Зедактировать профиль"></button>
@@ -84,7 +84,25 @@
                 value='Да' name="submit-popup-card">
               </form>
             </div>
-        </div>
+          </div>
+
+          <div class="popup popup-edit-avatar">
+            <div class="popup__container">
+              <button class="popup__close-btn" type="button"></button>
+              <h2 class="popup__title">
+                Обновить аватар
+              </h2>
+              <form class="popup__form" name="form-add-card" novalidate>
+
+                <input id="url-input" class="popup__input popup__input-text popup__input-text_type_link" type="url"
+                placeholder="Ссылка на картинку" name="link" required>
+                <span class="popup__input-error url-input-error"></span>
+
+                <input type="submit" class="popup__button" aria-label="Обновить аватар"
+                value='Сохранить' name="submit-popup-card">
+              </form>
+            </div>
+          </div>
 
           <div class="popup popup-zoom-img">
             <div class="popup__zoom-content">
@@ -111,7 +129,7 @@
             <h2 class="card__title"></h2>
             <div class="card__like-container">
               <button class="card__like-btn" type="button"></button>
-              <p class="card__like-quantity"></p>
+              <p class="card__like-quantity">0</p>
             </div>
           </div>
         </li>

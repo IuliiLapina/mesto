@@ -7,6 +7,9 @@ export const nameInput = popupEditProfile.querySelector(".popup__input-text_type
 export const aboutInput = popupEditProfile.querySelector(".popup__input-text_type_job");
 export const popupAddCard = content.querySelector(".popup-add-card");
 export const addCardBtn = content.querySelector(".profile__add-button");
+export const avatarEditBtn = content.querySelector(".profile__avatar");
+export const popupEditAvatar = content.querySelector(".popup-edit-avatar");
+
 export const configValidation = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",

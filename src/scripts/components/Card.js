@@ -1,12 +1,16 @@
 //Возвращает разметку карточки
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, handleOpenPopupDeleteCard) {
+  constructor(data, cardSelector, handleCardClick, handleOpenPopupDeleteCard, handleLikeClick) {
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
+    this._likes = data.likes;
+    this._owner = data.owner;
+
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleOpenPopupDeleteCard = handleOpenPopupDeleteCard;
+    this._handleLikeClick = handleLikeClick;
   }
 
   _getTemplate() {
@@ -39,7 +43,7 @@ export default class Card {
     this._element
       .querySelector(".card__like-btn")
       .addEventListener("click", () => {
-        this._handleLike();
+        this._handleLikeClick(this._element);
       });
 
     this._image
@@ -47,13 +51,16 @@ export default class Card {
         this._handleCardClick(this._name, this._link)
       );
   }
-/*
-  _handleDelete() {
+
+  isLiked() {
+
+  }
+  deleteCard() {
     this._element.remove();
     this._element = null;
   }
-*/
-  _handleLike() {
+
+  setLike() {
     this._element
       .querySelector(".card__like-btn")
       .classList.toggle("card__like-btn_active");
