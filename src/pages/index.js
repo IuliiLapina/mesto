@@ -12,6 +12,7 @@ import {
   popupEditProfile,
   avatarEditBtn,
   popupEditAvatar,
+  avatarInput
 } from "../scripts/utils/constants.js";
 
 import Card from "../scripts/components/Card.js";
@@ -39,7 +40,7 @@ const popupEditAvatarValidation = new FormValidator(
   configValidation,
   popupEditAvatar
 );
-popupAddCardValidation.enableValidation();
+popupEditAvatarValidation.enableValidation();
 
 //попап редактирования профиля
 const userInfo = new UserInfo({
@@ -76,9 +77,16 @@ function handlePopupOpenEditProfile() {
   popupWithFormEditProfile.open();
 }
 
+//редактирование аватара
 const popupWithFormEditAvatar = new PopupWithForm({
   popupSelector: ".popup-edit-avatar",
-  handleFormSubmit: () => {
+  handleFormSubmit: (formData) => {
+    api
+    .setUserAvatar(formData.avatar)
+    .then(() => {
+      userInfo.setUserAvatar(formData.avatar);
+    })
+    .catch((err) => console.log(err));
     popupWithFormEditAvatar.close();
   },
 });

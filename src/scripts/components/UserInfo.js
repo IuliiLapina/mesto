@@ -17,7 +17,7 @@ export default class UserInfo {
 
   getUserAvatar() {
     const userAvatar = {
-      avatar: this._avatarSelector.src
+      avatar: this._avatarSelector.style.backgroundImage
     }
     return userAvatar;
   }
