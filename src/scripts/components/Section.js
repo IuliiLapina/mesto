@@ -18,9 +18,7 @@ export default class Section {
     });
   }
 
-  addItem(element, data) {
-    data === {}
-    ? this._container.prepend(element)
-    : this._container.append(element)
+  addItem(element) {
+    this._container.prepend(element)
   }
 }

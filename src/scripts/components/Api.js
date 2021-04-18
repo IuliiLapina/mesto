@@ -87,4 +87,21 @@ export default class Api {
       },
     }).then(this._checkResponse);
   }
+
+  deleteCard(card) {
+    return fetch(`${this._address}/v1/cohort-22/cards/${card._id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._token,
+      },
+    }).then(this._checkResponse);
+  }
+
+  getNumberOfLikes(id) {
+    return fetch(`${this._address}/v1/cohort-22/cards/likes/${id}`, {
+      headers: {
+        authorization: this._token,
+      },
+    }).then(this._checkResponse);
+  }
 }

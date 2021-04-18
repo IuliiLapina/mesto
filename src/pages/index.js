@@ -25,6 +25,7 @@ import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import Api from "../scripts/components/Api.js";
+import { info } from "autoprefixer";
 
 //Валидация форм
 const popupEditProfileValidation = new FormValidator(
@@ -49,7 +50,7 @@ popupEditAvatarValidation.enableValidation();
 const userInfo = new UserInfo({
   nameSelector: ".profile__title",
   aboutSelector: ".profile__subtitle",
-  avatarSelector: ".profile__avatar",
+  avatarSelector: ".profile__avatar"
 });
 
 function formEditProfileInputsValue() {
@@ -119,7 +120,7 @@ const popupWithFormAddCard = new PopupWithForm({
       .addNewCard(formData)
       .then(() => {
         const generateCard = createCard(formData, cardSelector);
-        newcardList.addItem(generateCard);
+        newCardList.addItem(generateCard);
         popupWithFormAddCard.close();
       })
       .catch((err) => console.log(err))
@@ -141,13 +142,12 @@ function handlePopupOpenAddCard() {
 //попап удаления карточки
 const popupWithFormDeleteCard = new PopupWithForm({
   popupSelector: ".popup-delete-card",
-  handleFormSubmit: (data) => {
+  handleFormSubmit: () => {
     api
-      .deleteCard(data)
+      .deleteCard(cardToRemove._id)
       .then(() => {
-        if ((data._id = userData)) {
-        }
-      popupWithFormDeleteCard.close();
+        cardToRemove._id.remove();
+        popupWithFormDeleteCard.close();
       })
       .catch((err) => console.log(err))
       .finally(() => {
@@ -168,17 +168,23 @@ function createCard(cardData, cardSelector) {
     cardData,
     cardSelector,
     popupZoomCard.open.bind(popupZoomCard),
-    popupWithFormDeleteCard.open.bind(popupWithFormDeleteCard)
+    {
+      handleRemoveClick: () => {
+        popupWithFormDeleteCard.open();
+        cardToRemove = card;
+      }
+    }
   );
   return card.generateCard();
 }
 
-const newcardList = new Section(
+const newCardList = new Section(
   {
     data: {},
     renderer: (item) => {
       const generateCard = createCard(item, cardSelector);
-      newcardList.addItem(generateCard, data);
+      newCardList.addItem(generateCard);
+      console.log(item._id, item.owner._id)
     },
   },
   ".cards"
@@ -192,13 +198,19 @@ const api = new Api({
 //берем с сервера карточки
 api
   .getInitialCards()
-  .then((result) => {
+  .then((initialCards) => {
+    console.log(initialCards);
     const cardList = new Section(
       {
-        data: result,
+        data: initialCards,
         renderer: (item) => {
-          const generateCard = createCard(item, cardSelector);
-          cardList.addItem(generateCard, result);
+          if (true) {
+            const generateCard = createCard(item, cardSelector);
+            cardList.addItem(generateCard);
+          } else {
+
+          }
+
         },
       },
       ".cards"
@@ -208,12 +220,15 @@ api
   .catch((err) => console.log(err));
 
 //берем с сервера инфо пользователя
-let userId = "";
+let userId = null;
 api
   .getUserData()
-  .then((result) => {
-    userInfo.setUserInfo(result.name, result.about, result._id);
-    userInfo.setUserAvatar(result.avatar);
-    userId = result._id;
+  .then((info) => {
+    userInfo.setUserInfo(info.name, info.about, info._id);
+    userInfo.setUserAvatar(info.avatar);
+    userId = userInfo.getUserInfo().userId;
+    //console.log(userInfo);
+    //console.log(userId);
+  //  userId = result._id;
   })
   .catch((err) => console.log(err));
