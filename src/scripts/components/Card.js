@@ -2,6 +2,8 @@
 //import cardSelector from '../utils/constants.js';
 export default class Card {
   constructor(data, cardSelector, handleCardClick, {handleRemoveClick}, {handleLikeClick}) {
+
+    this._id = data._id;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
@@ -21,6 +23,14 @@ export default class Card {
     return cardElement;
   }
 
+  getCardElement() {
+    return this._element;
+  }
+
+  getCardId() {
+    return this._id;
+  }
+
   generateCard(userId) {
     this._element = this._getTemplate();
     this._image = this._element.querySelector(".card__image");
@@ -36,15 +46,11 @@ export default class Card {
 
   _setEventListeners(userId) {
     if ((this._owner._id === userId) || this._owner === null) {
-      console.log("There will be delete listener")
       this._element
         .querySelector(".card__delete-btn")
         .addEventListener("click", () => {
           this._handleRemoveClick();
         });
-    } else
-      {
-      console.log("There will not be delete listener")
     }
 
     this._element

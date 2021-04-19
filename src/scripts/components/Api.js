@@ -88,8 +88,8 @@ export default class Api {
     }).then(this._checkResponse);
   }
 
-  deleteCard(card) {
-    return fetch(`${this._address}/v1/cohort-22/cards/${card._id}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._address}/v1/cohort-22/cards/${cardId}`, {
       method: "DELETE",
       headers: {
         authorization: this._token,
