@@ -58,6 +58,21 @@ function formEditProfileInputsValue() {
   nameInput.value = userInfo.getUserInfo().name;
   aboutInput.value = userInfo.getUserInfo().about;
 }
+const api = new Api({
+  address: "https://mesto.nomoreparties.co",
+  token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9",
+});
+
+//берем с сервера инфо пользователя
+let userId = null;
+api
+  .getUserData()
+  .then((info) => {
+    userInfo.setUserInfo(info.name, info.about, info._id);
+    userInfo.setUserAvatar(info.avatar);
+    userId = userInfo.getUserInfo().userId;
+  })
+  .catch((err) => console.log(err));
 
 //изменяем и отправляем данные пользователя на сервер
 const popupWithFormEditProfile = new PopupWithForm({
@@ -117,7 +132,6 @@ function handlePopupOpenEditAvatar() {
 const popupWithFormAddCard = new PopupWithForm({
   popupSelector: ".popup-add-card",
   handleFormSubmit: (formData) => {
-
     api
       .addNewCard(formData)
       .then((response) => {
@@ -166,7 +180,7 @@ const popupZoomCard = new PopupWithImage(".popup-zoom-img");
 popupZoomCard.setEventListeners();
 
 //Про отрисовку карточек
-function createCard(cardData, cardSelector, userId) {
+function createCard(cardData, cardSelector) {
   const card = new Card(
     cardData,
     cardSelector,
@@ -179,16 +193,30 @@ function createCard(cardData, cardSelector, userId) {
       },
     },
     {
-      handleLikeClick: () => {},
+      handleLikeClick: () => {
+        if (card.isLiked(userId) === true) {
+          api
+            .deleteCardLike(card.getCardId())
+            .then((response) => {
+              card.setCardLikes(response.likes);
+              card.removeLike();
+            })
+            .catch((err) => console.log(err));
+        } else {
+          api
+            .addCardLike(card.getCardId())
+            .then((response) => {
+              card.setCardLikes(response.likes);
+              card.setLike();
+            })
+            .catch((err) => console.log(err));
+        }
+      },
     }
   );
   return card.generateCard(userId);
 }
 
-const api = new Api({
-  address: "https://mesto.nomoreparties.co",
-  token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9",
-});
 let cardList = null;
 //берем с сервера карточки
 function drawCardsFromServer() {
@@ -202,7 +230,7 @@ function drawCardsFromServer() {
           renderer: (item) => {
             let generateCard = null;
             if (item.owner._id === userId) {
-              generateCard = createCard(item, cardSelector, userId);
+              generateCard = createCard(item, cardSelector);
               cardList.addItem(generateCard);
             } else {
               generateCard = createCard(item, cardWithoutBinSelector);
@@ -218,14 +246,3 @@ function drawCardsFromServer() {
 }
 
 drawCardsFromServer();
-
-//берем с сервера инфо пользователя
-let userId = null;
-api
-  .getUserData()
-  .then((info) => {
-    userInfo.setUserInfo(info.name, info.about, info._id);
-    userInfo.setUserAvatar(info.avatar);
-    userId = userInfo.getUserInfo().userId;
-  })
-  .catch((err) => console.log(err));

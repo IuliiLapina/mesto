@@ -70,8 +70,8 @@ export default class Api {
     }).then(this._checkResponse);
   }
 
-  setCardLike(id) {
-    return fetch(`${this._address}/v1/cohort-22/cards/likes/${id}`, {
+  addCardLike(cardId) {
+    return fetch(`${this._address}/v1/cohort-22/cards/likes/${cardId}`, {
       method: "PUT",
       headers: {
         authorization: this._token,
@@ -91,14 +91,6 @@ export default class Api {
   deleteCard(cardId) {
     return fetch(`${this._address}/v1/cohort-22/cards/${cardId}`, {
       method: "DELETE",
-      headers: {
-        authorization: this._token,
-      },
-    }).then(this._checkResponse);
-  }
-
-  getNumberOfLikes(id) {
-    return fetch(`${this._address}/v1/cohort-22/cards/likes/${id}`, {
       headers: {
         authorization: this._token,
       },
