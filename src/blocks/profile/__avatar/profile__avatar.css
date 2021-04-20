@@ -5,7 +5,7 @@
   grid-area: avatar;
   background-size: cover;
   background-position: center;
-  cursor: pointer;
+  cursor: url('../../../images/avatar/avatar-ico.png'), auto;
 }
 
 .profile__avatar:hover {
