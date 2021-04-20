@@ -1,17 +1,18 @@
 //вставляет разметку карточки в DOM
 //отрисовывает разметку, которую возвращает Card
 
-import { data } from "autoprefixer";
-
 //items — это массив данных, которые нужно добавить на страницу при инициализации класса
 //Свойство renderer — это функция, которая отвечает за создание и отрисовку данных на странице
 export default class Section {
-  constructor({ data , renderer }, containerSelector) {
+  constructor({ data, renderer }, containerSelector) {
     this._renderedItems = data;
     this._renderer = renderer;
-    this._container = document.querySelector(containerSelector);
+    this._container = containerSelector;
   }
 
+  setRenderedItems(items) {
+    this._renderedItems = items;
+  }
   renderItems() {
     this._renderedItems.forEach((item) => {
       this._renderer(item);
@@ -19,6 +20,6 @@ export default class Section {
   }
 
   addItem(element) {
-    this._container.prepend(element)
+    this._container.prepend(element);
   }
 }

@@ -1,8 +1,8 @@
 export default class UserInfo {
   constructor({nameSelector, aboutSelector, avatarSelector}) {
-    this._nameSelector = document.querySelector(nameSelector);
-    this._aboutSelector = document.querySelector(aboutSelector);
-    this._avatarSelector = document.querySelector(avatarSelector);
+    this._nameSelector = nameSelector;
+    this._aboutSelector = aboutSelector;
+    this._avatarSelector = avatarSelector;
   }
 //возвращает объект с данными пользователя
   getUserInfo() {
@@ -23,12 +23,16 @@ export default class UserInfo {
 
 //принимает новые данные пользователя
   setUserInfo(name, about, _id) {
-    this._nameSelector.textContent = name;
-    this._aboutSelector.textContent = about;
-    this._userId = _id;
+    if (name && about && _id) {
+      this._nameSelector.textContent = name;
+      this._aboutSelector.textContent = about;
+      this._userId = _id;
+    }
   }
 
   setUserAvatar(avatar) {
-    this._avatarSelector.style.backgroundImage = `url(${avatar})`;
+    if (avatar) {
+      this._avatarSelector.style.backgroundImage = `url(${avatar})`;
+    }
   }
 }

@@ -17,6 +17,12 @@ import {
   popupAddCardSaveBtn,
   popupDeleteCardSaveBtn,
   cardWithoutBinSelector,
+  profileTitle,
+  profileSubtitle,
+  profileAvatar,
+  popupDeleteCard,
+  popupZoomImg,
+  containerForCards,
 } from "../scripts/utils/constants.js";
 
 import Card from "../scripts/components/Card.js";
@@ -26,7 +32,6 @@ import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import Section from "../scripts/components/Section.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import Api from "../scripts/components/Api.js";
-import { data, info } from "autoprefixer";
 
 //Валидация форм
 const popupEditProfileValidation = new FormValidator(
@@ -49,9 +54,9 @@ popupEditAvatarValidation.enableValidation();
 
 //попап редактирования профиля
 const userInfo = new UserInfo({
-  nameSelector: ".profile__title",
-  aboutSelector: ".profile__subtitle",
-  avatarSelector: ".profile__avatar",
+  nameSelector: profileTitle,
+  aboutSelector: profileSubtitle,
+  avatarSelector: profileAvatar,
 });
 
 function formEditProfileInputsValue() {
@@ -63,9 +68,9 @@ const api = new Api({
   token: "7a45c432-7073-4f3b-9cf1-c12940fb64b9",
 });
 
-//берем с сервера инфо пользователя
 let userId = null;
-api
+//берем с сервера инфо пользователя
+const userInfoPromise = api
   .getUserData()
   .then((info) => {
     userInfo.setUserInfo(info.name, info.about, info._id);
@@ -74,9 +79,41 @@ api
   })
   .catch((err) => console.log(err));
 
+//берем с сервера карточки
+const initialCardsPromise = api
+  .getInitialCards()
+  .then((initialCards) => {
+    initialCards.reverse();
+    return initialCards;
+  })
+  .catch((err) => console.log(err));
+
+const cardList = new Section(
+  {
+    data: null,
+    renderer: (item) => {
+      let generateCard = null;
+      if (item.owner._id === userId) {
+        generateCard = createCard(item, cardSelector);
+        cardList.addItem(generateCard);
+      } else {
+        generateCard = createCard(item, cardWithoutBinSelector);
+        cardList.addItem(generateCard);
+      }
+    },
+  },
+  containerForCards
+);
+
+Promise.all([userInfoPromise, initialCardsPromise])
+.then((values) => {
+  cardList.setRenderedItems(values[1]);
+  cardList.renderItems();
+});
+
 //изменяем и отправляем данные пользователя на сервер
 const popupWithFormEditProfile = new PopupWithForm({
-  popupSelector: ".popup-edit-profile",
+  popupSelector: popupEditProfile,
   handleFormSubmit: (formData) => {
     api
       .setUserData(formData)
@@ -103,7 +140,7 @@ function handlePopupOpenEditProfile() {
 
 //редактирование аватара
 const popupWithFormEditAvatar = new PopupWithForm({
-  popupSelector: ".popup-edit-avatar",
+  popupSelector: popupEditAvatar,
   handleFormSubmit: (formData) => {
     api
       .setUserAvatar(formData.avatar)
@@ -130,7 +167,7 @@ function handlePopupOpenEditAvatar() {
 //попап добавления карточки
 //отправляем карточку на сервер
 const popupWithFormAddCard = new PopupWithForm({
-  popupSelector: ".popup-add-card",
+  popupSelector: popupAddCard,
   handleFormSubmit: (formData) => {
     api
       .addNewCard(formData)
@@ -158,7 +195,7 @@ function handlePopupOpenAddCard() {
 //попап удаления карточки
 let cardToDelete = null;
 const popupWithFormDeleteCard = new PopupWithForm({
-  popupSelector: ".popup-delete-card",
+  popupSelector: popupDeleteCard,
   handleFormSubmit: () => {
     api
       .deleteCard(cardToDelete.getCardId())
@@ -176,7 +213,7 @@ const popupWithFormDeleteCard = new PopupWithForm({
 popupWithFormDeleteCard.setEventListeners();
 
 //Попап картинки
-const popupZoomCard = new PopupWithImage(".popup-zoom-img");
+const popupZoomCard = new PopupWithImage(popupZoomImg);
 popupZoomCard.setEventListeners();
 
 //Про отрисовку карточек
@@ -216,33 +253,3 @@ function createCard(cardData, cardSelector) {
   );
   return card.generateCard(userId);
 }
-
-let cardList = null;
-//берем с сервера карточки
-function drawCardsFromServer() {
-  api
-    .getInitialCards()
-    .then((initialCards) => {
-      initialCards.reverse();
-      cardList = new Section(
-        {
-          data: initialCards,
-          renderer: (item) => {
-            let generateCard = null;
-            if (item.owner._id === userId) {
-              generateCard = createCard(item, cardSelector);
-              cardList.addItem(generateCard);
-            } else {
-              generateCard = createCard(item, cardWithoutBinSelector);
-              cardList.addItem(generateCard);
-            }
-          },
-        },
-        ".cards"
-      );
-      cardList.renderItems();
-    })
-    .catch((err) => console.log(err));
-}
-
-drawCardsFromServer();
