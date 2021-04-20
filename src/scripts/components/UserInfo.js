@@ -23,9 +23,13 @@ export default class UserInfo {
 
 //принимает новые данные пользователя
   setUserInfo(name, about, _id) {
-    if (name && about && _id) {
+    if (name) {
       this._nameSelector.textContent = name;
+    }
+    if (about) {
       this._aboutSelector.textContent = about;
+    }
+    if (_id) {
       this._userId = _id;
     }
   }
